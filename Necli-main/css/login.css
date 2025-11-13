@@ -1,0 +1,174 @@
+/* 1. Fondo general */
+body {
+    /* El fondo morado principal */
+    background-color: #2f227a;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* Usamos min-height para que cubra toda la pantalla */
+    position: relative;
+    /* Necesario para posicionar la clave dinámica */
+}
+
+/* 2. Contenedor principal centrado */
+.container-login {
+    width: 90%;
+    max-width: 380px;
+    /* El contenedor no necesita fondo si el body ya lo tiene */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Centra el logo y la tarjeta */
+    text-align: center;
+}
+
+/* 3. Tarjeta de Login (Asegura que el contenido esté dentro) */
+.card-login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+    /* Espacio superior para el logo */
+    padding-bottom: 30px;
+}
+
+/* 4. Logo */
+.logo {
+    width: 130px;
+    height: auto;
+    border-radius: 20px;
+    margin-bottom: 100px;
+    /* Mucho espacio debajo del logo antes de los campos */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* 5. Título de Login (No visible en la imagen, lo ocultamos o eliminamos) */
+.title-login {
+    display: none;
+}
+
+/* 6. Clave Dinámica (Elemento de la esquina superior derecha) */
+.user-info-login {
+    position: absolute;
+    top: 20px;
+    /* Distancia desde arriba */
+    right: 20px;
+    /* Distancia desde la derecha */
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 20px;
+    /* Morado muy claro, similar al fondo de los campos */
+    background-color: #a48dff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.icon-user {
+    /* El icono 'O' (Círculo) */
+    font-size: 0.7rem;
+    color: #2f227a;
+    margin-right: 5px;
+    padding: 3px;
+    border-radius: 50%;
+    background-color: #fff;
+    font-weight: bold;
+    /* Ocultamos la 'O' si queremos solo un círculo, o lo dejamos como está */
+    visibility: hidden;
+    width: 10px;
+    height: 10px;
+}
+
+.user-id {
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+/* 7. Formulario */
+.form-login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    /* Espacio entre campos */
+}
+
+/* 8. Campo de Teléfono (con prefijo +57 |) */
+.input-group-phone {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 16px 15px;
+    border-radius: 8px;
+    background-color: #a48dff;
+    /* Color de botón claro */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.input-group-phone span {
+    color: #e2d8ff;
+    font-size: 1rem;
+    font-weight: bold;
+    padding-right: 10px;
+    border-right: 1px solid #e2d8ff;
+}
+
+.input-phone-number {
+    flex-grow: 1;
+    /* Ocupa el espacio restante */
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    text-align: right;
+    /* Alinea el número a la derecha */
+    padding-left: 10px;
+    /* Remueve el foco de Android/Chrome */
+    outline: none;
+}
+
+/* 9. Campo de PIN */
+.input-field {
+    width: 100%;
+    padding: 16px 15px;
+    /* Ajustado para que el padding sea similar al del teléfono */
+    border: none;
+    border-radius: 8px;
+    background-color: #a48dff;
+    /* Color de botón claro */
+    color: #fff;
+    font-size: 1rem;
+    text-align: center;
+    /* Centra el texto del PIN */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    outline: none;
+}
+
+/* 10. Botón "Ingresa" */
+.btn-submit {
+    width: 100%;
+    padding: 16px;
+    border: 2px solid #a48dff;
+    /* Borde del mismo color que los campos, pero más oscuro que el fondo */
+    border-radius: 8px;
+    /* Fondo transparente o muy oscuro para que solo se vea el borde y el texto */
+    background-color: transparent;
+    color: #a48dff;
+    /* Color del texto del botón */
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 30px;
+    /* Espacio arriba */
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-submit:hover {
+    background-color: #1a1548;
+    /* Un hover muy sutil */
+}
