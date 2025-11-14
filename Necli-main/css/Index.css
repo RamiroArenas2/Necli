@@ -1,0 +1,55 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.main {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #2f2680;
+}
+
+.content-logo {
+  height: 75%;
+  position: relative;
+}
+
+.logo {
+  width: 180px;
+  height: 180px;
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50px;
+}
+
+.content-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 25%;
+  gap: 15px;
+}
+
+.Create-necli {
+  width: 90%;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #916cdb;
+  color: #f5f5f5;
+  font-family: sans-serif;
+}
+.loguin {
+  width: 90%;
+  height: 40px;
+  border-radius: 5px;
+  border: 2px, solid, #f5f5f5;
+  color: #f5f5f5;
+  font-family: sans-serif;
+  background-color: rgba(0, 0, 0, 0);
+}
