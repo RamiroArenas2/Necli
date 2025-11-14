@@ -1,0 +1,194 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #301E6A;
+    color: #FFFFFF;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* --- Contenedor Principal de la Pantalla --- */
+.profile-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+    padding-top: 80px;
+    position: relative;
+}
+
+/* Botón de Volver*/
+.profile-header {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.back-arrow {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* --- 2. Contenido Principal --- */
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 320px;
+    margin-bottom: 50px;
+}
+
+/* Info de Usuario */
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.user-icon-container {
+    background-color: #8E7DE0;
+    border-radius: 12px;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.user-icon {
+    font-size: 45px;
+    color: #FFFFFF;
+}
+
+.user-info h1 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+}
+
+/* Menú de Acciones (Botones) */
+.action-menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+}
+
+.action-btn {
+    background-color: #4A3A9A;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 14px 18px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    transition: background-color 0.2s ease;
+}
+
+.action-btn:hover {
+    background-color: #5A48B0;
+}
+
+/* Cerrar Sesión*/
+.profile-footer {
+    position: absolute;
+    bottom: 25px;
+    left: 20px;
+}
+
+.logout-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+.logout-icon-container {
+    background-color: rgba(142, 125, 224, 0.5);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.logout-btn span {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+/* MEDIA QUERY PARA BROWSER VIEW */
+@media (min-width: 768px) {
+    .profile-screen {
+        justify-content: center; /* Centra verticalmente en pantallas grandes */
+        padding-top: 0; /* Elimina el padding superior */
+    }
+
+    .back-arrow {
+        font-size: 28px;
+    }
+
+    .profile-content {
+        max-width: 350px; /* Más ancho en pantallas grandes */
+        margin-bottom: 30px;
+    }
+
+    .user-icon-container {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 15px;
+    }
+
+    .user-icon {
+        font-size: 50px;
+    }
+
+    .user-info h1 {
+        font-size: 22px;
+    }
+
+    .action-menu {
+        gap: 15px;
+    }
+
+    .action-btn {
+        padding: 16px 20px;
+        font-size: 16px;
+    }
+   
+    .profile-footer {
+        bottom: 30px;
+        left: 30px;
+    }
+
+    .logout-icon-container {
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+    }
+
+    .logout-btn span {
+        font-size: 12px;
+    }
+
+}
