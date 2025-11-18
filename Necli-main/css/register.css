@@ -8,32 +8,34 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    /* CLAVE: Esto establece el contexto para el botón de volver */
     position: relative;
 }
 
-/* 1. Estilo del enlace de Volver */
+/* 1. Estilo del botón de Volver (Minimalista/Transparente) */
 .back-button {
     position: absolute;
     top: 30px;
     left: 20px;
     color: #cbb9ff;
-    text-decoration: none;
     font-size: 1rem;
     font-weight: bold;
     z-index: 10;
     transition: color 0.2s;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 10px 0;
 }
 
 .back-button:hover {
     color: #ffffff;
+    background: transparent;
 }
 
 /* Contenedor principal centrado */
 .register-container {
     width: 90%;
-    max-width: 430px;
-    /* Ancho máximo para vista móvil grande */
+    max-width: 400px; 
     background-color: #2f227a;
     text-align: center;
     display: flex;
@@ -41,16 +43,18 @@ body {
     align-items: center;
     margin: 0 auto;
     padding-top: 50px;
-    /* Margen para que el formulario no choque con el botón volver */
+    padding-left: 20px; 
+    padding-right: 20px;
+    box-sizing: border-box; 
 }
 
-/* Imagen centrada */
+/* Imagen centrada - CORRECCIONES AQUÍ */
 .logo {
-    width: 130px;
+    width: 150px;
     height: auto;
-    border-radius: 20px;
+    border-radius: 40px; 
     margin-bottom: 30px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
 }
 
 /* Estilo del formulario */
@@ -61,7 +65,7 @@ form {
     gap: 15px;
 }
 
-/* Campos de texto y select (ESTILO DE BOTÓN MORADO CLARO) */
+/* Campos de texto (Morado Claro) */
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -79,6 +83,7 @@ select {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     appearance: none;
     -webkit-appearance: none;
+    box-sizing: border-box;
 }
 
 /* Estilo para el placeholder */
@@ -87,19 +92,15 @@ input::placeholder {
     font-weight: bold;
 }
 
-/* Botón "Crea tu Necli" (AHORA ES UN ENLACE <a> con clase .btn-submit) */
+/* Botón "Crea tu Necli" (CORRECCIONES AQUÍ) */
 .btn-submit {
-    /* Propiedades de visualización para que se comporte como un bloque */
     display: block;
     width: 100%;
     text-align: center;
-    text-decoration: none;
 
-    /* Propiedades de estilo de botón */
     padding: 16px;
     border: none;
     border-radius: 8px;
-    /* Color Morado Oscuro para Contrastar */
     background-color: #5d45b5;
     color: #fff;
     font-size: 1.1rem;
@@ -108,8 +109,15 @@ input::placeholder {
     cursor: pointer;
     transition: 0.3s;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box; 
 }
 
 .btn-submit:hover {
     background-color: #4b3793;
+}
+
+/* Estilo para cuando el botón de envío está deshabilitado */
+.btn-submit.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
