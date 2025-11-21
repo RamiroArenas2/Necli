@@ -11,7 +11,7 @@
     <div class="profile-screen">
         
         <header class="profile-header">
-            <a href="#" class="back-arrow">&larr;</a>
+            <a href="#"  id="btn-back" class="back-arrow">&larr;</a>
         </header>
 
         <main class="profile-content">
@@ -23,23 +23,24 @@
             </div>
 
             <nav class="action-menu">
-                <a href="#" class="action-btn">Actualizar información</a>
-                <a href="#" class="action-btn">Cambiar Contraseña</a>
-                <a href="#" class="action-btn">Eliminar Cuenta</a>
-                <a href="#" class="action-btn">Ayuda ¿?</a>
+                <a href="#" id="btn-update-info" class="action-btn">Actualizar información</a>
+                <a href="#" id="btn-change-pass" class="action-btn">Cambiar Contraseña</a>
+                <a href="#" id="btn-delete-account" class="action-btn">Eliminar Cuenta</a>
+                <a href="#" id="btn-help" class="action-btn">Ayuda ¿?</a>
             </nav>
 
         </main>
 
         <footer class="profile-footer">
-            <a href="#" class="logout-btn">
+            <a href="#" id="btn-logout" class="logout-btn">
                 <div class="logout-icon-container">
                     <span>&#9211;</span> </div>
-                <span>Cerrar Seccion</span>
+                <span>Cerrar Sesión</span>
             </a>
         </footer>
 
     </div>
-    
+
+    <script src="../js/settings.js"></script>
 </body>
 </html>
