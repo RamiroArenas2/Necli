@@ -89,7 +89,7 @@ select {
 /* Estilo para el placeholder */
 input::placeholder {
     color: #e2d8ff;
-    font-weight: bold;
+    font-weight: bold; 
 }
 
 /* Botón "Crea tu Necli" (CORRECCIONES AQUÍ) */
