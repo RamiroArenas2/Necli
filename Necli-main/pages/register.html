@@ -7,28 +7,31 @@
     <title>NECLI - Register</title>
 
     <link rel="stylesheet" href="/Necli-main/css/register.css">
-</head>
+    
+    </head>
 
 <body>
-    <a href="/Necli-main/index.html" class="back-button">← Volver</a>
+    <button id="btnBack" class="back-button">← Volver</button> 
 
     <div class="register-container">
 
         <img class="logo" src="/Necli-main/Img/ImgNecli.png.jpg" alt="Logo Necli" />
-        <form>
+        
+        <form id="registerForm">
             <input type="text" id="fullname" name="fullname" placeholder="Nombre y Apellido" required>
             <input type="text" id="idtype" name="idtype" placeholder="CC o TI" required>
             <input type="tel" id="phone" name="phone" placeholder="Teléfono" required>
-            input type="email" id="email" name="email" placeholder="Correo Electrónico" required>
+            <input type="email" id="email" name="email" placeholder="Correo Electrónico" required>
             <input type="date" id="age" name="age" placeholder="Edad" required>
-            <input type="password" id="pin" name="pin" placeholder="Pin de 4 Dígitos" minlength="4" maxlength="4"
-                required>
+            <input type="password" id="pin" name="pin" placeholder="Pin de 4 Dígitos" minlength="4" maxlength="4" required>
 
-            <a href="/Necli-main/pages/login.html" class="btn-submit">Crea tu Necli</a>
+            <button id="btnCreateNecli" class="btn-submit disabled" type="button">Crea tu Necli</button>
 
         </form>
 
     </div>
+
+    <script src="/Necli-main/js/register.js"></script> 
 </body>
 
 </html>

@@ -1,55 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NECLI Login</title>
     <link rel="stylesheet" href="/Necli-main/css/login.css">
-    </head>
+</head>
+
 <body>
     <div class="container-login">
         <div class="card-login">
-            
+
             <div class="user-info-login">
-                <div class="icon-user">O</div> 
+                <div class="icon-user">O</div>
                 <span class="user-id">User demo id: 25254625</span>
             </div>
 
             <img class="logo" src="/Necli-main/Img/ImgNecli.png.jpg" alt="Logo Necli" />
-            
+
             <p class="title-login">Login</p>
 
-            <form class="form-login" onsubmit="return handleLogin(event)">
-                
+            <form class="form-login" id="loginForm">
+
                 <div class="input-group-phone">
-                    <span>+57 |</span>
-                    <input type="tel" id="loginPhoneNumber" placeholder="3147398347" pattern="[0-9]{10}" required class="input-phone-number">
+                    <span> +57 </span>
+                    <input type="tel" id="loginPhoneNumber" placeholder="3147398347" pattern="[0-9]{10}" required
+                        class="input-phone-number">
                 </div>
 
-                <input type="password" id="loginPin" placeholder="PIN ****" maxlength="4" pattern="[0-9]{4}" required class="input-field">
+                <input type="password" id="loginPin" placeholder="PIN ****" maxlength="4" pattern="[0-9]{4}" required
+                    class="input-field">
 
-                <a  href="/Necli-main/pages/home.html"
-                <button type="submit" class="btn-submit">Login</button> </a>
+                <div id="errorMessage" class="error-message"></div>
+
+                <button type="submit" class="btn-submit" id="btnLogin">Login</button>
+
+                <button type="button" class="btn-back" id="btnBack">Volver</button>
+
             </form>
         </div>
     </div>
 
-    <script>
-        function handleLogin(e) {
-            e.preventDefault(); 
 
-            const phoneNumber = document.getElementById('loginPhoneNumber').value;
-            const pin = document.getElementById('loginPin').value;
-
-            // Simulated login check
-            if (phoneNumber === "3147398347" && pin === "1234") { 
-                alert('Welcome! Login successful.');
-                // Here you would redirect to your main app page
-                // window.location.href = 'dashboard.html';
-            } else {
-                alert('Phone number or PIN is incorrect. Please try again.');
-            }
-        }
-    </script>
+    <script src="/Necli-main/js/login.js"></script>
 </body>
+
 </html>
