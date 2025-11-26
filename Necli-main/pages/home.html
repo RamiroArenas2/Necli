@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Necli-main/css/main.css">
     <title>Document</title>
 </head>
+
 <body>
     <div class="container-colors">
         <div class="content-purple"></div>
@@ -13,12 +15,42 @@
     </div>
 
     <section class="content-info-profile">
-       <section class="content-img-profile">
-        <img src="/Necli-main/img/img-profile.png" alt="">
-       </section> 
-       <section class="content-img-help">
-        <a href="">?</a>
-       </section> 
+        <section class="content-info-profile-welcome">
+            <section class="content-img-profile">
+                <button class="button-settings">
+                    <img src="/Necli-main/img/img-profile.png" alt="">
+                </button>
+
+            </section>
+            <section class="content-welcome">
+                <p>Bienvenid@</p>
+                <h2 class="name-user" id="name-user">Juan Sebastian</h2>
+            </section>
+        </section>
+        <section class="content-img-help">
+            <a href="" class="help">?</a>
+        </section>
     </section>
+
+    <section class="wallet-balance">
+        <section class="content-info-balance">
+            <p>Disponible</p>
+            <button id="toggle-balance" class="eye-btn">
+                <img id="eye-open" src="/Necli-main/img/open-eye.png" class="eye-icon hidden">
+                <img id="eye-closed" src="/Necli-main/img/closed-eye.png" class="eye-icon">
+            </button>
+        </section>
+
+        <section class="content-balance">
+            <span id="balance">$ 2.000.000,00</span>
+            <span id="balance-hidden" class="hidden">•••••••</span>
+        </section>
+
+    </section>
+
+
+    <script src="/Necli-main/js/hidden-balance.js"></script>
+
 </body>
+
 </html>
