@@ -1,107 +1,116 @@
-/* 1. Fondo general */
+/* ---------------------------------------------------- */
+/* 1. ESTILOS GENERALES Y CENTRADO ABSOLUTO EN PANTALLA */
+/* ---------------------------------------------------- */
 body {
     background-color: #2f227a;
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
+    /* Centrado Vertical y Horizontal robusto */
+    display: flex; 
+    justify-content: center; 
+    align-items: center;   
     min-height: 100vh;
-    position: relative;
+    
+    /* Esencial para posicionar la 'Clave Dinámica' y evitar desbordamiento */
+    position: relative; 
+    width: 100vw;
+    overflow-x: hidden; 
 }
 
-/* 2. Contenedor principal centrado */
+/* 2. Contenedor principal de la vista */
 .container-login {
-    width: 90%;
+    width: 100%;
     max-width: 380px;
+    padding: 0 25px; 
+    box-sizing: border-box;
+    
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
-/* 3. Tarjeta de Login (Asegura que el contenido esté dentro) */
+/* 6. CLAVE DINÁMICA (Esquina Superior Derecha) */
+.user-info-login {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    
+    display: flex;
+    align-items: center;
+    
+    padding: 0.5rem 0.8rem;
+    border-radius: 1.5rem;
+    background-color: #a48dff; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-size: 0.8rem;
+}
+
+.user-id {
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* ---------------------------------------------------- */
+/* 3. LOGO Y TÍTULOS */
+/* ---------------------------------------------------- */
 .card-login {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 50px;
-    padding-bottom: 30px;
+    padding-top: 3.5rem; 
+    padding-bottom: 2rem;
 }
 
-/* 4. Logo */
 .logo {
-    width: 130px;
+    width: 8.125rem;
     height: auto;
-    border-radius: 40px;
-    margin-bottom: 100px;
+    border-radius: 2.5rem;
+    margin-bottom: 3.5rem; 
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
-/* 5. Título de Login (No visible en la imagen, lo ocultamos o eliminamos) */
 .title-login {
-    display: none;
+    /* Muestra y estiliza el texto "Login" */
+    display: block; 
+    color: #fff; 
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 2rem; 
+    text-align: center;
 }
 
-/* 6. Clave Dinámica (Elemento de la esquina superior derecha) */
-.user-info-login {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    padding: 5px 10px;
-    border-radius: 20px;
-    background-color: #a48dff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.icon-user {
-    font-size: 0.7rem;
-    color: #2f227a;
-    margin-right: 5px;
-    padding: 3px;
-    border-radius: 50%;
-    background-color: #fff;
-    font-weight: bold;
-    visibility: hidden;
-    width: 10px;
-    height: 10px;
-}
-
-.user-id {
-    color: #fff;
-    font-size: 0.7rem;
-    font-weight: bold;
-}
-
-/* 7. Formulario */
+/* ---------------------------------------------------- */
+/* 4. FORMULARIO Y CAMPOS DE ENTRADA */
+/* ---------------------------------------------------- */
 .form-login {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 1rem; 
 }
 
-/* 8. Campo de Teléfono (con prefijo +57 |) */
+/* Campo de Teléfono (Contenedor +57) */
 .input-group-phone {
     display: flex;
     align-items: center;
-    width: 100%;
-    padding: 16px 15px;
-    border-radius: 8px;
+    width: 100%; 
+    padding: 0.8rem 0.9375rem; 
+    border-radius: 0.5rem;
     background-color: #a48dff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 0 auto 0 auto;
+    box-sizing: border-box; 
 }
 
 .input-group-phone span {
     color: #e2d8ff;
     font-size: 1rem;
     font-weight: bold;
-    padding-right: 10px;
+    padding-right: 0.625rem;
     border-right: 1px solid #e2d8ff;
 }
 
@@ -112,54 +121,75 @@ body {
     color: #fff;
     font-size: 1rem;
     text-align: right;
-    padding-left: 10px;
+    padding-left: 0.625rem;
     outline: none;
 }
 
-/* 9. Campo de PIN */
+/* Campo de PIN */
 .input-field {
-    width: 100%;
-    padding: 16px 15px;
+    width: 100%; 
+    padding: 0.8rem 0.9375rem; 
     border: none;
-    border-radius: 8px;
+    border-radius: 0.5rem;
     background-color: #a48dff;
     color: #fff;
     font-size: 1rem;
     text-align: center;
-    margin-top: 0 auto 0 auto;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     outline: none;
+    box-sizing: border-box;
 }
 
-/* 10. Botón "Ingresa y Volver" */
+/* ---------------------------------------------------- */
+/* 5. BOTONES (LOGIN Y VOLVER) */
+/* ---------------------------------------------------- */
 .btn-submit,
 .btn-back {
-    width: 108%;
-    padding: 9px 15px;
-    border: 2px solid #a48dff;
-    border-radius: 8px;
-    background-color: transparent;
-    color: #a48dff;
+    width: 100%; 
+    padding: 0.56rem 0.9375rem;
+    border-radius: 0.5rem;
     font-size: 1.1rem;
     font-weight: bold;
-    margin-top: 0 auto 0 auto;
     cursor: pointer;
-    transition: 0.3s;
+    transition: background-color 0.3s;
+    box-sizing: border-box;
+    margin-top: 0.5rem; 
+    border: 2px solid transparent; 
 }
 
-.btn-submit,
-.btn-back :hover {
-    background-color: #1a1548;
+/* Estilo del botón LOGIN */
+.btn-submit {
+    background-color: #a48dff; 
+    color: #2f227a;            
 }
 
-/* Puedes agregar esto a tu login.css */
+/* Estilo del botón VOLVER (con borde) */
+.btn-back {
+    background-color: transparent;
+    color: #a48dff;
+    border: 2px solid #a48dff;
+}
+
+/* Estados Hover/Mouse-over */
+.btn-submit:hover {
+    background-color: #8c7be8; 
+}
+
+.btn-back:hover {
+    background-color: rgba(164, 141, 255, 0.1); 
+}
+
+/* Mensaje de Error (Mantenido) */
 #errorMessage {
     color: white;
     background-color: #e74c3c;
-    padding: 8px;
-    margin-top: 10px;
-    border-radius: 4px;
+    padding: 0.5rem;
+    margin-top: 0.625rem;
+    border-radius: 0.25rem;
     text-align: center;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
+    width: 100%;
+    box-sizing: border-box;
 }
+/* Aquí el resto de las clases si las tienes... */

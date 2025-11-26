@@ -26,7 +26,7 @@ function showMessage(message) {
     setTimeout(() => {
         errorDisplay.style.opacity = 0;
         errorDisplay.textContent = '';
-    }, 2000);
+    }, 2000); 
 }
 
 // --- LÓGICA DE VALIDACIÓN Y LOGIN ---
