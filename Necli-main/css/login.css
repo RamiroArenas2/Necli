@@ -14,7 +14,6 @@ body {
     margin: 0;
     padding: 0;
     
-    /* Centrado Vertical y Horizontal Robusto */
     display: flex; 
     justify-content: center; 
     align-items: center;   
@@ -31,7 +30,6 @@ body {
     max-width: 380px;
     padding: 0 25px; 
     
-    /* Centrado vertical reforzado */
     margin-top: auto; 
     margin-bottom: auto; 
     
@@ -77,7 +75,6 @@ body {
     width: 8.125rem;
     height: auto;
     border-radius: 2.5rem;
-    /* Espacio clave: Separación entre logo y campos de entrada */
     margin-bottom: 15.5rem; 
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
@@ -166,7 +163,7 @@ body {
     color: #a48dff;            
 }
 
-/* Estados Hover/Mouse-over */
+
 .btn-submit:hover {
     background-color: #8c7be8; 
     color: #2f227a;              
@@ -180,15 +177,15 @@ body {
 /* 6. MENSAJE DE ERROR (RESTAURADO) */
 /* ---------------------------------------------------- */
 #errorMessage {
-    /* Estilos base: Oculto por defecto */
+    
     color: white;
-    background-color: #e74c3c; /* Fondo rojo */
+    background-color: #e74c3c;
     padding: 0.5rem;
     margin-top: 0.625rem;
     border-radius: 0.25rem;
     text-align: center;
     
-    /* Para JavaScript: Se mostrará u ocultará con la opacidad */
+    
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     width: 100%;

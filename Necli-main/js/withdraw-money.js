@@ -41,15 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
             Se enviará un código e información detallada a tu número de teléfono y/o correo electrónico para que puedas retirar el dinero en: ${designatedMethod}.
         `;
         
-        // Ocultar el formulario y mostrar la pantalla de confirmación
         withdrawContainer.style.display = 'none';
         confirmationScreen.style.display = 'flex'; 
     }
 
-    // ⭐️ EVENTO CLAVE: REDIRECCIÓN A HOME ⭐️
+    // EVENTO CLAVE: REDIRECCIÓN A HOME 
     homeButton.addEventListener('click', () => {
-        // Redirige al usuario a la página de inicio
-        // REEMPLAZA 'home.html' con la ruta correcta de tu página de inicio
         window.location.href = 'home.html'; 
     });
 
@@ -88,10 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
         submitButton.disabled = true;
 
         setTimeout(() => {
-            // Mostrar la nueva pantalla de confirmación
             showConfirmation(amount, method);
             
-            // Restablecer el formulario (aunque se oculta)
             form.reset();
             submitButton.disabled = false;
 

@@ -47,6 +47,5 @@ backButton.addEventListener('click', function() {
     window.location.href = indexUrl;
 });
 
-
 // 4. Ejecutar la verificación al cargar la página
 window.onload = checkFormValidity;

@@ -117,25 +117,20 @@ button:hover {
 
 /* ======= MENSAJE DE ÉXITO (Solicitud Enviada) ======= */
 .success-message {
-    /* Estilo del contenedor del mensaje */
-    position: absolute; /* Para que flote sobre el formulario, si es necesario, o lo reemplace */
+    position: absolute; 
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 90%;
     max-width: 350px;
     padding: 35px 25px;
-    background: #e6f7ff; /* Fondo muy claro y amigable */
-    border: 2px solid #4a90e2; /* Borde azul suave */
+    background: #e6f7ff; 
+    border: 2px solid #4a90e2; 
     border-radius: 15px;
     text-align: center;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    z-index: 1000; /* Asegura que esté encima de otros elementos */
-    
-    /* Inicialmente Oculto */
+    z-index: 1000; 
     display: none; 
-    
-    /* Animación */
     opacity: 0;
     transition: opacity 0.5s ease;
 }
@@ -152,7 +147,6 @@ button:hover {
     margin-bottom: 0;
 }
 
-/* Clase para mostrar el mensaje */
 .success-message.show {
     display: block;
     opacity: 1;

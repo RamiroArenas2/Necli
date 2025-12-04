@@ -1,8 +1,7 @@
 /* ----------------------------------- */
 /* 1. ESTILOS GENERALES Y CENTRADO */
-/* ----------------------------------- */
 body {
-    background-color: #2f227a; /* Fondo morado oscuro */
+    background-color: #2f227a;
     font-family: 'Arial', sans-serif;
     color: #fff;
     margin: 0;
@@ -16,7 +15,7 @@ body {
 
 /* 2. CONTENEDOR PRINCIPAL Y TÍTULO */
 .container-withdraw {
-    background-color: transparent; /* Fondo transparente para que el color del body domine */
+    background-color: transparent;
     padding: 0 1.5rem;
     width: 90%;
     max-width: 450px;
@@ -24,7 +23,7 @@ body {
 }
 
 h2 {
-    color: #fff; /* Título blanco, muy visible */
+    color: #fff;
     margin-bottom: 2rem;
     font-size: 1.8rem;
 }
@@ -33,7 +32,7 @@ h2 {
 #withdrawForm {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem; /* Espaciado cómodo entre campos (como la solicitud de crédito) */
+    gap: 1.5rem;
     width: 100%;
 }
 
@@ -42,7 +41,7 @@ label {
     font-weight: bold;
     font-size: 1rem;
     color: #e2d8ff;
-    margin-bottom: -1rem; /* Acercar la etiqueta al campo */
+    margin-bottom: -1rem;
 }
 
 /* 4. CAMPOS DE ENTRADA (INPUT y SELECT) */
@@ -51,14 +50,13 @@ select {
     padding: 1rem;
     border: none;
     border-radius: 0.5rem;
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo casi blanco para contraste */
-    color: #2f227a; /* Texto oscuro */
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #2f227a;
     font-size: 1.1rem;
     outline: none;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     width: 100%;
-    /* Alineación de texto a la derecha para montos */
     text-align: right; 
 }
 
@@ -70,7 +68,7 @@ input::placeholder {
 /* 5. BOTÓN PRINCIPAL */
 button[type="submit"],
 .btn-home {
-    background-color: #a48dff; /* Morado claro para el botón */
+    background-color: #a48dff;
     color: #fff;
     padding: 1.2rem;
     border: none;
@@ -79,7 +77,7 @@ button[type="submit"],
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-top: 2rem; /* Separación clara del formulario */
+    margin-top: 2rem;
     text-decoration: none; 
     display: block;
     width: 100%;
@@ -95,31 +93,30 @@ button[type="submit"]:hover {
     font-size: 0.95rem;
     font-weight: bold;
     text-align: center;
-    color: #ff4d4d; /* Inicialmente rojo para errores */
+    color: #ff4d4d;
 }
 
 /* 7. PANTALLA DE CONFIRMACIÓN (NUEVA SECCIÓN REQUERIDA) */
 #confirmationScreen {
-    display: none; /* INICIALMENTE OCULTO (solo se muestra con JS) */
-    position: fixed; /* Ocupa toda la ventana de vista */
+    display: none;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #2f227a; /* Mismo fondo */
+    background-color: #2f227a;
     color: white;
     text-align: center;
     padding: 2rem;
     box-sizing: border-box;
-    /* Usa Flexbox para centrar el contenido en la pantalla */
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 100; /* Asegura que esté por encima de todo */
+    z-index: 100; 
 }
 
 #confirmationScreen h3 {
-    color: #00e676; /* Verde de éxito */
+    color: #00e676; 
     font-size: 2rem;
     margin-bottom: 1rem;
 }
@@ -131,14 +128,12 @@ button[type="submit"]:hover {
     max-width: 350px;
 }
 
-/* Icono de confirmación (el '✅' del HTML) */
 .confirmation-icon {
     font-size: 4rem;
     color: #00e676;
     margin-bottom: 2rem;
 }
 
-/* Ajuste específico para el botón HOME dentro de la pantalla */
 #homeButton {
-    max-width: 300px; /* Limita el ancho del botón para que no sea excesivamente grande */
+    max-width: 300px; 
 }
