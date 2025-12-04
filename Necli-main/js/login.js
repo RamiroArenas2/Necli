@@ -22,32 +22,27 @@ function showMessage(message) {
     errorDisplay.textContent = message;
     errorDisplay.style.opacity = 1;
     
-    // Ocultar después de 4 segundos
     setTimeout(() => {
         errorDisplay.style.opacity = 0;
         errorDisplay.textContent = '';
-    }, 2000); 
+    }, 2000); // Ocultar después de 4 segundos
 }
 
 // --- LÓGICA DE VALIDACIÓN Y LOGIN ---
 
 function handleLogin(e) {
-    // Evita el comportamiento nativo del formulario al presionar Enter
     e.preventDefault();
     
     const phoneNumber = inputPhone.value.trim();
     const pin = inputPin.value.trim();
 
-    // 1. **VERIFICACIÓN DE CAMPOS VACÍOS (CORREGIDA Y Estricta)**
-    // Si algún campo no cumple con los requisitos HTML (required, pattern)
+    // 1. **VERIFICACIÓN DE CAMPOS VACÍOS**
     if (!inputPhone.checkValidity() || !inputPin.checkValidity()) {
         showMessage("Por favor, complete todos los campos para ingresar. Los formatos deben ser correctos.");
-        return; // Detiene la función aquí si hay campos vacíos o inválidos
+        return;
     }
 
     // 2. **VERIFICACIÓN DE CREDENCIALES (Funcionalidad Completa)**
-    
-    // Verificación de Usuario/Teléfono
     if (phoneNumber !== VALID_PHONE) {
         showMessage("Usuario incorrecto. Verifique su número de teléfono.");
         return;
@@ -65,18 +60,13 @@ function handleLogin(e) {
     // Redirección al Home
     setTimeout(() => {
         window.location.href = HOME_URL;
-    }, 500);
+    }, 1000); // Se ocualta desues de 2 segundos
 }
 
-// --- EVENT LISTENERS ---
-
-// 1. Manejar el clic del botón de login
 btnLogin.addEventListener('click', handleLogin);
 
-// 2. Manejar el submit del formulario (para la tecla Enter)
 loginForm.addEventListener('submit', handleLogin); 
 
-// 3. Manejar el clic del botón "Volver"
 btnBack.addEventListener('click', function() {
     window.location.href = INDEX_URL;
 });
