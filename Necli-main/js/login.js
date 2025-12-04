@@ -38,7 +38,7 @@ function handleLogin(e) {
     const phoneNumber = inputPhone.value.trim();
     const pin = inputPin.value.trim();
 
-    // 1. **VERIFICACIÓN DE CAMPOS VACÍOS (CORREGIDA Y Estricta)**
+    // 1. **VERIFICACIÓN DE CAMPOS VACÍOS**
     // Si algún campo no cumple con los requisitos HTML (required, pattern)
     if (!inputPhone.checkValidity() || !inputPin.checkValidity()) {
         showMessage("Por favor, complete todos los campos para ingresar. Los formatos deben ser correctos.");
@@ -65,7 +65,7 @@ function handleLogin(e) {
     // Redirección al Home
     setTimeout(() => {
         window.location.href = HOME_URL;
-    }, 500);
+    }, 1000); // se ocualta desues de 2 segundos
 }
 
 // --- EVENT LISTENERS ---

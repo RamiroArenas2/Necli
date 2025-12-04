@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Credito</title>
+    <link rel="stylesheet" href="/Necli-main/css/request-credit.css">
+</head>
+<body>
+    
+    <div class="container">
+        <h2>Solicitud de Crédito</h2>
+
+        <form id="formCredito">
+
+            <!-- Datos personales -->
+            <label for="nombre">Nombre completo</label>
+            <input type="text" id="nombre" required>
+
+            <label for="cedula">Número de documento</label>
+            <input type="number" id="cedula" required>
+
+            <label for="telefono">Número de teléfono</label>
+            <input type="tel" id="telefono" required>
+
+            <!-- Información del crédito -->
+            <label for="monto">Monto solicitado</label>
+            <input type="number" id="monto" min="100000" step="50000" required>
+
+            <label for="plazo">Plazo del crédito</label>
+            <select id="plazo" required>
+                <option value="">Seleccione una opción</option>
+                <option value="3">3 meses</option>
+                <option value="6">6 meses</option>
+                <option value="12">12 meses</option>
+                <option value="18">18 meses</option>
+            </select>
+
+            <label for="motivo">Motivo del crédito</label>
+            <textarea id="motivo" placeholder="Explique brevemente para qué necesita el crédito" required></textarea>
+
+            <button type="submit">Enviar Solicitud</button>
+        </form>
+
+    </div>
+
+    <div class="container">
+        </div>
+    
+    <div id="successMessage" class="success-message">
+        <h3>✅ Solicitud Recibida</h3>
+        <p>¡Tu solicitud ha sido enviada con éxito! Nos comunicaremos contigo dentro de las próximas 24 horas para continuar con el proceso.</p>
+    </div>
+
+    <script src="/Necli-main/js/request-credit.js"></script>
+</body>
+</html>

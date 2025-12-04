@@ -1,6 +1,6 @@
 /* Fondo general */
 body {
-    background-color: #2f227a;
+    background-color:  #2F2680;
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
@@ -16,7 +16,7 @@ body {
     position: absolute;
     top: 30px;
     left: 20px;
-    color: #cbb9ff;
+    color: #f5f5f5;
     font-size: 1rem;
     font-weight: bold;
     z-index: 10;
@@ -28,7 +28,7 @@ body {
 }
 
 .back-button:hover {
-    color: #ffffff;
+    color: #f5f5f5;
     background: transparent;
 }
 
@@ -36,7 +36,7 @@ body {
 .register-container {
     width: 90%;
     max-width: 400px; 
-    background-color: #2f227a;
+    background-color: #2F2680;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -65,7 +65,7 @@ form {
     gap: 15px;
 }
 
-/* Campos de texto (Morado Claro) */
+/* Campos de texto  */
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -76,8 +76,8 @@ select {
     padding: 16px;
     border: none;
     border-radius: 8px;
-    background-color: #a48dff;
-    color: #fff;
+    background-color: #916CDB;
+    color: #f5f5f5;
     font-size: 1rem;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -88,7 +88,7 @@ select {
 
 /* Estilo para el placeholder */
 input::placeholder {
-    color: #e2d8ff;
+    color: #f5f5f5;
     font-weight: bold; 
 }
 
@@ -102,7 +102,7 @@ input::placeholder {
     border: none;
     border-radius: 8px;
     background-color: #5d45b5;
-    color: #fff;
+    color: #f5f5f5;
     font-size: 1.1rem;
     font-weight: bold;
     margin-top: 20px;
