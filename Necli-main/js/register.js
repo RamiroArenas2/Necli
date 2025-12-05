@@ -30,23 +30,54 @@ formInputs.forEach(input => {
     input.addEventListener('input', checkFormValidity);
 });
 
-// 2. Manejo del click en "Crea tu Necli" (Redirección a Login)
-createNecliButton.addEventListener('click', function() {
-    
+// 2. Manejo del click en "Crea tu Necli"
+createNecliButton.addEventListener('click', async function () {
+
     if (createNecliButton.classList.contains('disabled')) {
-        
         alert('Por favor, complete toda la información requerida antes de crear su cuenta.');
-        
-    } else {
-        window.location.href = loginUrl;
+        return;
+    }
+// TOMAR LOS DATOS DEL FORMULARIO
+const fullname = document.getElementById('fullname').value;
+const idtype = document.getElementById('idtype').value;
+const phone = document.getElementById('phone').value;
+const email = document.getElementById('email').value;
+const age = document.getElementById('age').value;
+const pin = document.getElementById('pin').value;
+
+// ARMAR EL JSON A MANDAR
+const newUser = { fullname, idtype, phone, email, age, pin };
+
+
+    try {
+        // MANDAR AL BACKEND
+        const res = await fetch("http://localhost:5000/api/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newUser)
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            alert("Usuario creado correctamente 🎉");
+            window.location.href = loginUrl;
+        } else {
+            alert(data.error || "Error creando usuario");
+        }
+
+    } catch (error) {
+        console.error("Error comunicándose con el backend:", error);
+        alert("Hubo un problema al conectar con el servidor.");
     }
 });
 
-// 3. Manejo del click en el botón "Volver" (Redirección al Index)
+// 3. Botón "Volver"
 backButton.addEventListener('click', function() {
     window.location.href = indexUrl;
 });
-
 
 // 4. Ejecutar la verificación al cargar la página
 window.onload = checkFormValidity;
