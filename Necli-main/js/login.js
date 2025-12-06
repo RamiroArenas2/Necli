@@ -1,6 +1,6 @@
-// --- CREDENCIALES SIMULADAS ---
-const VALID_PHONE = "3147398347";
-const VALID_PIN = "1234";
+// --- ENDPOINT REAL ---
+const LOGIN_API = "http://localhost:5000/api/users/login";
+
 const HOME_URL = "/Necli-main/pages/home.html"; 
 const INDEX_URL = "/Necli-main/index.html"; 
 
@@ -13,11 +13,6 @@ const inputPin = document.getElementById('loginPin');
 const errorDisplay = document.getElementById('errorMessage');
 
 // --- MENSAJERÍA ---
-
-/**
- * Muestra un mensaje en el área de errores de la aplicación.
- * @param {string} message - El mensaje a mostrar.
- */
 function showMessage(message) {
     errorDisplay.textContent = message;
     errorDisplay.style.opacity = 1;
@@ -28,45 +23,59 @@ function showMessage(message) {
     }, 2000); // Ocultar después de 4 segundos
 }
 
-// --- LÓGICA DE VALIDACIÓN Y LOGIN ---
-
-function handleLogin(e) {
+// --- LÓGICA LOGIN CON BACKEND ---
+async function handleLogin(e) {
     e.preventDefault();
     
     const phoneNumber = inputPhone.value.trim();
     const pin = inputPin.value.trim();
 
-    // 1. **VERIFICACIÓN DE CAMPOS VACÍOS**
+    // 1. Validaciones HTML (phone + PIN)
     if (!inputPhone.checkValidity() || !inputPin.checkValidity()) {
         showMessage("Por favor, complete todos los campos para ingresar. Los formatos deben ser correctos.");
         return;
     }
 
-    // 2. **VERIFICACIÓN DE CREDENCIALES (Funcionalidad Completa)**
-    if (phoneNumber !== VALID_PHONE) {
-        showMessage("Usuario incorrecto. Verifique su número de teléfono.");
-        return;
-    }
+    try {
+        // 2. Hacer petición al backend
+        const res = await fetch(LOGIN_API, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                phone: phoneNumber,
+                password: pin
+            })
+        });
 
-    // Verificación de Contraseña/PIN
-    if (pin !== VALID_PIN) {
-        showMessage("Contraseña (PIN) incorrecta. Vuelva a intentarlo.");
-        return;
-    }
+        const data = await res.json();
 
-    // 3. Login Exitoso
-    showMessage("¡Bienvenido! Iniciando sesión...");
-    
-    // Redirección al Home
-    setTimeout(() => {
-        window.location.href = HOME_URL;
-    }, 1000); // Se ocualta desues de 2 segundos
+        // Si el backend responde error
+        if (!res.ok) {
+            showMessage(data.error || "Credenciales incorrectas");
+            return;
+        }
+
+        // 3. Login válido
+        showMessage("¡Bienvenido! Iniciando sesión...");
+
+        // Guardar sesión local (por ahora solo ID)
+        localStorage.setItem("userId", data._id);
+
+        setTimeout(() => {
+            window.location.href = HOME_URL;
+        }, 500);
+
+    } catch (error) {
+        console.error("Error en login:", error);
+        showMessage("Error de conexión con el servidor.");
+    }
 }
 
+// --- EVENT LISTENERS ---
 btnLogin.addEventListener('click', handleLogin);
-
-loginForm.addEventListener('submit', handleLogin); 
-
-btnBack.addEventListener('click', function() {
+loginForm.addEventListener('submit', handleLogin);
+btnBack.addEventListener('click', () => {
     window.location.href = INDEX_URL;
 });
