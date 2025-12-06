@@ -20,7 +20,7 @@ function showMessage(message) {
     setTimeout(() => {
         errorDisplay.style.opacity = 0;
         errorDisplay.textContent = '';
-    }, 2000); 
+    }, 2000); // Ocultar después de 4 segundos
 }
 
 // --- LÓGICA LOGIN CON BACKEND ---
