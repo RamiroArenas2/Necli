@@ -1,0 +1,153 @@
+/* ======= RESET ======= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* ======= BODY ======= */
+body {
+    background: #2f227a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+}
+/*======= titulo de Solicitud de credito =======*/
+h2 {
+    text-align: center;
+    color: #ecd1d1;
+    margin-bottom: 49px;
+
+}
+
+/* ======= CONTENEDOR PRINCIPAL ======= */
+.credit-container {
+    background: #f5f5f5;
+    width: 100%;
+    max-width: 420px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(61, 57, 57, 0.1);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* ======= TÍTULO ======= */
+.credit-container h1 {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 10px;
+    color: #c4b6b6;
+}
+
+.credit-container p {
+    text-align: center;
+    font-size: 14px;
+    color: #1f1b1b;
+    margin-bottom: 25px;
+}
+
+/* ======= CAMPOS DEL FORMULARIO ======= */
+.form-group {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #bb9494;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color .2s ease;
+    background: #f9f9f9;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #4a90e2;
+    outline: none;
+    background: #fff;
+}
+
+/* ======= BOTÓN ======= */
+button {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    background: #a48dff;;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 40px;
+    transition: background .2s ease;
+}
+
+button:hover {
+    background: #3a7bcb;
+}
+
+/* ======= CUADRO DE RESULTADO ======= */
+#result {
+    margin-top: 20px;
+    padding: 15px;
+    background: #eef5ff;
+    border-left: 4px solid #517aa8;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+}
+
+/* ======= ANIMACIÓN ======= */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ======= MENSAJE DE ÉXITO (Solicitud Enviada) ======= */
+.success-message {
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 350px;
+    padding: 35px 25px;
+    background: #e6f7ff; 
+    border: 2px solid #4a90e2; 
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    z-index: 1000; 
+    display: none; 
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.success-message h3 {
+    color: #0056b3;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.success-message p {
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 0;
+}
+
+.success-message.show {
+    display: block;
+    opacity: 1;
+}

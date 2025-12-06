@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f9;
+}
+
+
+.header {
+    background: linear-gradient(135deg, #2c248f, #7a5df0);
+    padding: 35px 20px;
+    text-align: center;
+    color: white;
+    border-radius: 0 0 30px 30px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+}
+
+.header h2 {
+    margin: 0 0 10px 0;
+    font-size: 26px;
+}
+
+.header p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.container {
+    max-width: 400px;
+    margin: 25px auto;
+    padding: 20px;
+}
+
+
+.accordion {
+    background: white;
+    border-radius: 14px;
+    margin-bottom: 15px;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.15);
+    overflow: hidden;
+    padding: 0;
+    transition: 0.3s;
+}
+
+.accordion summary {
+    padding: 18px;
+    font-size: 18px;
+    color: #2c248f;
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+}
+
+.icon {
+    width: 24px;
+    opacity: .85;
+}
+
+
+.accordion summary::after {
+    content: "▼";
+    position: absolute;
+    right: 20px;
+    font-size: 14px;
+    transition: transform 0.3s;
+}
+
+.accordion[open] summary::after {
+    transform: rotate(180deg);
+}
+
+
+.accordion p {
+    padding: 0 18px 18px;
+    color: #555;
+    line-height: 1.4em;
+    animation: fade 0.3s ease;
+}
+
+
+@keyframes fade {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+.back-btn {
+    display: block;
+    text-align: center;
+    margin-top: 25px;
+    padding: 12px;
+    background: #2c248f;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.back-btn:hover {
+    background: #4638d0;
+}

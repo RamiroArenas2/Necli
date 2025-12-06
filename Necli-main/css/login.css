@@ -1,5 +1,12 @@
 /* ---------------------------------------------------- */
-/* 1. ESTILOS GENERALES Y CENTRADO ABSOLUTO EN PANTALLA */
+/* 0. RESETEO UNIVERSAL (PREVENCIÓN DE DESBORDAMIENTO)  */
+/* ---------------------------------------------------- */
+*, *::before, *::after {
+    box-sizing: border-box; 
+}
+
+/* ---------------------------------------------------- */
+/* 1. ESTILOS GENERALES Y CENTRADO ABSOLUTO */
 /* ---------------------------------------------------- */
 body {
     background-color: #2f227a;
@@ -7,15 +14,13 @@ body {
     margin: 0;
     padding: 0;
     
-    /* Centrado Vertical y Horizontal robusto */
     display: flex; 
     justify-content: center; 
     align-items: center;   
     min-height: 100vh;
     
-    /* Esencial para posicionar la 'Clave Dinámica' y evitar desbordamiento */
     position: relative; 
-    width: 100vw;
+    width: 100%; 
     overflow-x: hidden; 
 }
 
@@ -24,7 +29,9 @@ body {
     width: 100%;
     max-width: 380px;
     padding: 0 25px; 
-    box-sizing: border-box;
+    
+    margin-top: auto; 
+    margin-bottom: auto; 
     
     display: flex;
     flex-direction: column;
@@ -32,15 +39,13 @@ body {
     text-align: center;
 }
 
-/* 6. CLAVE DINÁMICA (Esquina Superior Derecha) */
+/* 6. CLAVE DINÁMICA (Cajita Superior Derecha) */
 .user-info-login {
     position: absolute;
     top: 1rem;
     right: 1rem;
-    
     display: flex;
     align-items: center;
-    
     padding: 0.5rem 0.8rem;
     border-radius: 1.5rem;
     background-color: #a48dff; 
@@ -55,34 +60,25 @@ body {
 }
 
 /* ---------------------------------------------------- */
-/* 3. LOGO Y TÍTULOS */
+/* 3. LOGO Y ESPACIADO VERTICAL */
 /* ---------------------------------------------------- */
 .card-login {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 3.5rem; 
-    padding-bottom: 2rem;
+    padding-top: 0; 
+    padding-bottom: 0;
 }
 
 .logo {
     width: 8.125rem;
     height: auto;
     border-radius: 2.5rem;
-    margin-bottom: 3.5rem; 
+    margin-bottom: 15.5rem; 
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
-.title-login {
-    /* Muestra y estiliza el texto "Login" */
-    display: block; 
-    color: #fff; 
-    font-size: 1.5rem;
-    font-weight: 500;
-    margin-bottom: 2rem; 
-    text-align: center;
-}
 
 /* ---------------------------------------------------- */
 /* 4. FORMULARIO Y CAMPOS DE ENTRADA */
@@ -103,7 +99,6 @@ body {
     border-radius: 0.5rem;
     background-color: #a48dff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box; 
 }
 
 .input-group-phone span {
@@ -120,7 +115,7 @@ body {
     border: none;
     color: #fff;
     font-size: 1rem;
-    text-align: right;
+    text-align: left; 
     padding-left: 0.625rem;
     outline: none;
 }
@@ -134,14 +129,13 @@ body {
     background-color: #a48dff;
     color: #fff;
     font-size: 1rem;
-    text-align: center;
+    text-align: center; 
+    padding-left: 0.9375rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     outline: none;
-    box-sizing: border-box;
 }
-
 /* ---------------------------------------------------- */
-/* 5. BOTONES (LOGIN Y VOLVER) */
+/* 5. BOTONES (AMBOS VISIBLES Y ESTILOS FINALES) */
 /* ---------------------------------------------------- */
 .btn-submit,
 .btn-back {
@@ -151,45 +145,48 @@ body {
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s;
-    box-sizing: border-box;
-    margin-top: 0.5rem; 
-    border: 2px solid transparent; 
+    transition: 0.3s; 
+    margin-top: 1rem; 
 }
 
-/* Estilo del botón LOGIN */
+/* Botón LOGIN/INGRESA (Principal - Fondo Sólido Morado Claro) */
 .btn-submit {
     background-color: #a48dff; 
+    border: 2px solid transparent; 
     color: #2f227a;            
 }
 
-/* Estilo del botón VOLVER (con borde) */
+/* Botón VOLVER (Secundario - Borde Claro, Fondo Transparente) */
 .btn-back {
     background-color: transparent;
-    color: #a48dff;
-    border: 2px solid #a48dff;
+    border: 2px solid #a48dff; 
+    color: #a48dff;            
 }
 
-/* Estados Hover/Mouse-over */
+
 .btn-submit:hover {
     background-color: #8c7be8; 
+    color: #2f227a;              
 }
 
 .btn-back:hover {
     background-color: rgba(164, 141, 255, 0.1); 
 }
 
-/* Mensaje de Error (Mantenido) */
+/* ---------------------------------------------------- */
+/* 6. MENSAJE DE ERROR (RESTAURADO) */
+/* ---------------------------------------------------- */
 #errorMessage {
+    
     color: white;
     background-color: #e74c3c;
     padding: 0.5rem;
     margin-top: 0.625rem;
     border-radius: 0.25rem;
     text-align: center;
+    
+    
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     width: 100%;
-    box-sizing: border-box;
 }
-/* Aquí el resto de las clases si las tienes... */
