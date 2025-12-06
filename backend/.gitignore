@@ -1,0 +1,14 @@
+# Ignorar dependencias de Node.js
+node_modules/
+
+# Ignorar archivos de configuración del sistema
+.DS_Store
+
+# Ignorar la carpeta de compilación
+dist/
+
+# Ignorar variables de entorno
+.env
+
+README.md
+index.html
