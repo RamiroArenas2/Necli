@@ -1,46 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Necli</title>
-    <link rel="stylesheet" href="../css/settings.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/Necli-main/css/settings.css" />
+    <style>
+      /* ------- Correcciones esenciales ------- */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        overflow-y: auto; /* Permite scroll en toda la página */
+      }
 
+      .profile-screen {
+        padding-bottom: 40px;
+      }
+
+      .info-section {
+        margin-top: 40px; /* separación natural entre vistas */
+        padding: 20px;
+        background: #f7f7f7;
+        border-radius: 10px;
+      }
+
+      .hidden {
+        display: none; /* si deseas que inicie oculta */
+      }
+    </style>
+  </head>
+
+  <body>
     <div class="profile-screen">
+
+      <header class="profile-header">
+        <a href="#" id="btn-back" class="back-arrow">&larr;</a>
+      </header>
+
+      <main class="profile-content">
         
-        <header class="profile-header">
-            <a href="#"  id="btn-back" class="back-arrow">&larr;</a>
-        </header>
+        <!-- ------- Vista 1: Perfil ------- -->
+        <div class="user-info">
+          <div class="user-icon-container">
+            <span class="user-icon">&#128100;</span>
+          </div>
+          <h1>Juan Sebastian Usuga</h1>
+        </div>
 
-        <main class="profile-content">
-            
-            <div class="user-info">
-                <div class="user-icon-container">
-                    <span class="user-icon">&#128100;</span> </div>
-                <h1>Juan Sebastian Usuga</h1>
-            </div>
+        <nav class="action-menu">
+          <a href="#" id="btn-update-info" class="action-btn">Actualizar información</a>
+          <a href="#" id="btn-change-pass" class="action-btn">Cambiar Contraseña</a>
+          <a href="#" id="btn-delete-account" class="action-btn">Eliminar Cuenta</a>
+          <a href="#" id="btn-help" class="action-btn">Ayuda ¿?</a>
+        </nav>
 
-            <nav class="action-menu">
-                <a href="#" id="btn-update-info" class="action-btn">Actualizar información</a>
-                <a href="#" id="btn-change-pass" class="action-btn">Cambiar Contraseña</a>
-                <a href="#" id="btn-delete-account" class="action-btn">Eliminar Cuenta</a>
-                <a href="#" id="btn-help" class="action-btn">Ayuda ¿?</a>
-            </nav>
+        <!-- ------- Vista 2 en cascada: Actualizar Información ------- -->
+        <section id="info-section" class="info-section hidden">
+          <header class="info-header">
+            <button id="btn-back-info" class="back-arrow">&larr;</button>
+            <h2>Tu info</h2>
+          </header>
 
-        </main>
+          <ul class="info-list">
+            <li class="info-item">
+              <span class="info-icon">Aa</span>
+              <article id="btn-act-name" class="info-text">
+                <h4>Luis Ramiro Arenas</h4>
+                <p>Actualiza tu nombre de usuario</p>
+              </article>
+              <span class="check">✔</span>
+            </li>
 
-        <footer class="profile-footer">
-            <a href="#" id="btn-logout" class="logout-btn">
-                <div class="logout-icon-container">
-                    <span>&#9211;</span> </div>
-                <span>Cerrar Sesión</span>
-            </a>
-        </footer>
+            <li class="info-item">
+              <span class="info-icon">📱</span>
+              <article class="info-text">
+                <h4>3214784391</h4>
+                <p>Este es tu número de cuenta</p>
+              </article>
+              <span class="check">✔</span>
+            </li>
+
+            <li class="info-item">
+              <span class="info-icon">✉️</span>
+              <article class="info-text">
+                <h4>ramiroarenas2001@gmail.com</h4>
+                <p>Este es tu correo registrado</p>
+              </article>
+              <span class="check">✔</span>
+            </li>
+
+            <li class="info-item">
+              <span class="info-icon">🙂</span>
+              <article class="info-text">
+                <h4>Tu número de identificación</h4>
+                <p>CC 1001143681</p>
+              </article>
+              <span class="check">✔</span>
+            </li>
+
+            <li class="info-item">
+              <span class="info-icon">🏠</span>
+              <article class="info-text">
+                <h4>ANTIOQUIA – MEDELLÍN</h4>
+                <p>Lugar de tu residencia</p>
+              </article>
+              <span class="check">✔</span>
+            </li>
+          </ul>
+        </section>
+
+      </main>
+
+      <footer class="profile-footer">
+        <a href="#" id="btn-logout" class="logout-btn">
+          <div class="logout-icon-container">
+            <span>&#9211;</span>
+          </div>
+          <span>Cerrar Sesión</span>
+        </a>
+      </footer>
 
     </div>
 
-    <script src="../js/settings.js"></script>
-</body>
+    <script src="/Necli-main/js/settings.js"></script>
+  </body>
 </html>

@@ -8,7 +8,7 @@ body {
     background-color: #301E6A;
     color: #FFFFFF;
     min-height: 100vh;
-    overflow: hidden;
+    
 }
 
 /* --- Contenedor Principal de la Pantalla --- */
@@ -190,5 +190,91 @@ body {
     .logout-btn span {
         font-size: 12px;
     }
+
+
+    
+    /* Sección ACTUALIZAR INFORMACIÓN */
+    /* Ocultar sección en cascada */
+.hidden {
+    display: none;
+}
+
+/* Contenedor principal de la vista en cascada */
+.info-section {
+    width: 100%;
+    padding: 16px;
+    background: #fff;
+    animation: slideUp 0.35s ease;
+}
+
+/* Animación tipo cascada */
+@keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Header */
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.info-header .back-arrow {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.info-header h2 {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* Lista de items */
+.info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Cada item */
+.info-item {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 10px;
+    padding: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Icono */
+.info-icon {
+    font-size: 22px;
+    width: 32px;
+    text-align: center;
+    margin-right: 12px;
+}
+
+/* Textos */
+.info-text h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.info-text p {
+    margin: 0;
+    font-size: 13px;
+    color: #777;
+}
+
+/* Check verde */
+.check {
+    margin-left: auto;
+    font-size: 20px;
+    color: #26cc4e;
+}
+
 
 }
