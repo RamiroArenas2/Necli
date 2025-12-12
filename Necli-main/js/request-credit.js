@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Redirigir al usuario a la página de inicio (ajusta la URL según tu estructura)
         setTimeout(() => {
-            window.location.href = '/Necli-main/home.html'; 
+            window.location.href = '/Necli-main/pages/home.html'; 
         }, 2500); 
     });
 
