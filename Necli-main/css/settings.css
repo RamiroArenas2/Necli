@@ -26,7 +26,7 @@ body {
 .profile-screen {
   min-height: 100vh;
   padding: 20px;
-  padding-top: 72px;
+  padding-top: 70px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,7 +37,8 @@ body {
 }
 
 .profile-header {
-  position: fixed;
+  position: relative;
+  z-index: 9999;
   left: 16px;
   top: 12px;
 }
@@ -170,6 +171,7 @@ body {
 .panel-header {
   display: flex;
   align-items: center;
+  padding-top: 45px;
   gap: 12px;
   margin-bottom: 14px;
 }
