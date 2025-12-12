@@ -18,11 +18,11 @@ router.post("/", async (req, res) => {
         }
 
        
-        const Id_Account = "AC" + Math.floor(100000 + Math.random() * 900000);
+         const Account_Number = userExists.phone;
 
         const newAccount = new Account({
-            Id_Account,           
-            Id_User,
+            Account_Number,
+            User: Id_User,
             Balance_Account: Balance_Account || 0,
             Debit_Card_Number: Debit_Card_Number || null
         });
@@ -39,7 +39,7 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
     try {
-        const accounts = await Account.find().populate("Id_User");
+        const accounts = await Account.find().populate("User");
         res.status(200).json(accounts);
     } catch (error) {
         console.error("Error getting accounts:", error);
@@ -47,11 +47,11 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.get("/:Id_Account", async (req, res) => {
+router.get("/:Account_Number", async (req, res) => {
     try {
-        const { Id_Account } = req.params;
+        const { Account_Number } = req.params;
 
-        const account = await Account.findOne({ Id_Account }).populate("Id_User");
+        const account = await Account.findOne({ Account_Number }).populate("User");
         if (!account) {
             return res.status(404).json({ error: "Account not found" });
         }
