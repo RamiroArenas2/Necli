@@ -2,9 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const connectToDatabase = require('./config/database');
 
+
 const userRoutes = require('./routes/userRoutes');
 const accountRoutes = require('./routes/accountRoutes');
 const cardRoutes = require('./routes/cardRoutes');
+const transactionRoutes = require('./routes/transactionRoutes');
 
 const app = express();
 app.use(cors());
@@ -17,6 +19,8 @@ app.get('/', (req, res) => res.json({ ok: true, message: "API is working" }));
 app.use('/api/users', userRoutes);
 app.use('/api/accounts', accountRoutes);
 app.use('/api/cards', cardRoutes);
+app.use('/api/transactions', transactionRoutes);
+
 
 
 const PORT = process.env.PORT || 5000;
