@@ -10,7 +10,7 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ error: "All fields are required" });
         }
 
-        // Verificar si el usuario ya existe
+
         const exists = await User.findOne({ email });
         if (exists) return res.status(400).json({ error: "User already exists" });
 
