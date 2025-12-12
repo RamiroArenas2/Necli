@@ -1,0 +1,18 @@
+document.addEventListener("DOMContentLoaded" , () => {
+    const btnSettings = document.querySelector("#button-settings");
+    const btnHistory = document.querySelector("#Historial");
+    const btnMore = document.querySelector("#More");
+
+    btnSettings.addEventListener("click" , () => {
+        window.location.href = "/Necli-main/pages/settings.html"
+    })
+
+ btnHistory.addEventListener("click" , () => {
+        window.location.href = "/Necli-main/pages/movements.html"
+    })
+
+ btnMore.addEventListener("click" , () => {
+        window.location.href = "/Necli-main/pages/more.html"
+    })
+
+});
