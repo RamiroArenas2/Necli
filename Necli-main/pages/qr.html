@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/Necli-main/css/qr.css" />
+    <title>QR Necli</title>
+  </head>
+  <body>
+    <div class="container-colors">
+      <div class="content-purple"></div>
+      <div class="content-blue"></div>
+    </div>
+    <section class="content-info-profile">
+        <section class="content-img-help">
+          <a href="" class="help">?</a>
+        </section>
+      <section class="content-welcome">
+        <h2 class="name-user" id="name-user">Juan Sebastian</h2>
+      </section>
+    </section>
+    <div class="qr-section">
+      <div class="arrow">↩</div>
+      <div class="line"></div>
+
+      <img
+        src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=NecliQR"
+        class="qr-img"
+      />
+
+      <p class="info">
+        Recuerda que si cambias tu número de cel,<br />
+        tu QR Necli también cambia.
+      </p>
+
+      <p class="report">¿Necesitas reportes?</p>
+    </div>
+  </body>
+</html>
