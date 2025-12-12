@@ -1,46 +1,162 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Necli</title>
-    <link rel="stylesheet" href="../css/settings.css">
-</head>
-<body>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Necli — Ajustes</title>
+    <link rel="stylesheet" href="/Necli-main/css/settings.css" />
+  </head>
+  <body>
+    <header class="profile-header">
+      <a href="#" id="btn-back" class="back-arrow" aria-label="Volver"
+        >&larr;</a
+      >
+    </header>
 
-    <div class="profile-screen">
+    <main class="profile-screen" role="main">
+      <section class="user-info" aria-labelledby="user-name">
+        <div class="user-icon" aria-hidden="true">👤</div>
+        <h1 id="user-name">Ramiro Arenas</h1>
+      </section>
+
+      <nav class="action-menu" aria-label="Opciones de cuenta">
+        <button id="btn-update-info" class="action-btn" type="button">
+          Actualizar información
+        </button>
+        <button id="btn-change-pass" class="action-btn" type="button">
+          Cambiar contraseña
+        </button>
+        <button id="btn-help" class="action-btn ghost" type="button">
+          Ayuda
+        </button>
+        <button id="btn-delete-account" class="action-btn danger" type="button">
+          Eliminar cuenta
+        </button>
         
-        <header class="profile-header">
-            <a href="#"  id="btn-back" class="back-arrow">&larr;</a>
-        </header>
+      </nav>
 
-        <main class="profile-content">
-            
-            <div class="user-info">
-                <div class="user-icon-container">
-                    <span class="user-icon">&#128100;</span> </div>
-                <h1>Juan Sebastian Usuga</h1>
-            </div>
+      <footer class="profile-footer">
+        <button
+          id="btn-logout"
+          class="logout-btn"
+          type="button"
+          aria-label="Cerrar sesión"
+        >
+          <span class="logout-icon">⏻</span>
+          <span class="logout-text">Cerrar sesión</span>
+        </button>
+      </footer>
+    </main>
 
-            <nav class="action-menu">
-                <a href="#" id="btn-update-info" class="action-btn">Actualizar información</a>
-                <a href="#" id="btn-change-pass" class="action-btn">Cambiar Contraseña</a>
-                <a href="#" id="btn-delete-account" class="action-btn">Eliminar Cuenta</a>
-                <a href="#" id="btn-help" class="action-btn">Ayuda ¿?</a>
-            </nav>
+    <!-- Paneles se muestran/ocultan con JS) -->
+    <aside id="panel-update" class="panel" aria-hidden="true">
+      <header class="panel-header">
+        <button id="cancel-update" class="panel-back" type="button">
+          &larr;
+        </button>
+        <h2>Actualizar información</h2>
+      </header>
+      <form id="form-update" class="panel-body" autocomplete="off">
+        <label>
+          Nombre
+          <input id="input-name" name="name" type="text" inputmode="text" />
+        </label>
+        <label>
+          Documento de identidad
+          <input id="input-doc" name="document" type="number" inputmode="numeric" />
+        </label>
+        <label>
+          Teléfono
+          <input id="input-phone" name="phone" type="tel" inputmode="tel" />
+        </label>
+        <label>
+          Correo
+          <input id="input-email" name="email" type="email" />
+        </label>
+        <label>
+          Edad
+          <input id="input-age" name="age" type="number" inputmode="numeric" />
+        </label>
+        <div class="panel-actions">
+          <button id="save-update" type="button" class="action-btn">
+            Guardar
+          </button>
+       
+          <button id="cancel-update-btn" type="button" class="action-btn">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </aside>
 
-        </main>
+    <aside id="panel-change-pass" class="panel" aria-hidden="true">
+      <header class="panel-header">
+        <button id="cancel-pass" class="panel-back" type="button">
+          &larr;
+        </button>
+        <h2>Cambiar contraseña</h2>
+      </header>
+      <form id="form-pass" class="panel-body" autocomplete="off">
+        <label>
+          Contraseña actual
+          <input id="input-oldpass" name="oldpass" type="password" />
+        </label>
+        <label>
+          Nueva contraseña
+          <input id="input-newpass" name="newpass" type="password" />
+        </label>
+        <label>
+          Confirmar nueva
+          <input id="input-confirm" name="confirm" type="password" />
+        </label>
+        <div class="panel-actions">
+          <button id="save-pass" type="button" class="action-btn">
+            Guardar
+          </button>
 
-        <footer class="profile-footer">
-            <a href="#" id="btn-logout" class="logout-btn">
-                <div class="logout-icon-container">
-                    <span>&#9211;</span> </div>
-                <span>Cerrar Sesión</span>
-            </a>
-        </footer>
+          <button id="cancel-pass-btn" type="button" class="action-btn">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </aside>
 
-    </div>
+    <aside id="panel-delete" class="panel" aria-hidden="true">
+      <header class="panel-header">
+        <button id="cancel-delete" class="panel-back" type="button">
+          &larr;
+        </button>
+        <h2>Eliminar cuenta</h2>
+      </header>
+      <div class="panel-body">
+        <p class="muted">
+          Esta acción es irreversible. Se eliminarán tus datos locales.
+        </p>
+        <div class="panel-actions">
+          <button id="confirm-delete" class="action-btn danger" type="button">
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </aside>
 
-    <script src="../js/settings.js"></script>
-</body>
+    <aside id="panel-help" class="panel" aria-hidden="true">
+      <header class="panel-header">
+        <button id="close-help" class="panel-back" type="button">&larr;</button>
+        <h2>Ayuda</h2>
+      </header>
+      <div class="panel-body">
+        <details>
+          <summary>¿Cómo cambio mi correo?</summary>
+          <p>Edita tu correo en "Actualizar información" y presiona Guardar.</p>
+        </details>
+        <details>
+          <summary>¿Puedo recuperar mi cuenta?</summary>
+          <p>Si eliminas la cuenta los datos se borraran</p>
+        </details>
+      </div>
+    </aside>
+
+    <script src="/Necli-main/js/settings.js"></script>
+  </body>
 </html>
