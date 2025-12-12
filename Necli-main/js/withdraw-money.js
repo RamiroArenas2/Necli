@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // EVENTO CLAVE: REDIRECCIÓN A HOME 
     homeButton.addEventListener('click', () => {
-        window.location.href = 'home.html'; 
+        window.location.href = '/Necli-main/pages/home.html'; 
     });
 
 
