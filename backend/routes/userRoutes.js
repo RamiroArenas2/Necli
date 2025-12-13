@@ -89,22 +89,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
-  try {
-    const users = await User.find(); // Busca todos los documentos
-
-    if (!users || users.length === 0) {
-      return res.status(404).json({ error: "No users found" });
-    }
-
-    res.status(200).json(users);
-  } catch (error) {
-    console.error("Error getting users:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-
-});
-
 // update user information
 
 router.put("/:id", async (req, res) => {
@@ -181,6 +165,21 @@ router.delete("/:id", async (req, res) => {
     res.status(200).json({ message: "Account deletees successfully" });
   } catch (error) {
     console.error("Error deleting account: ", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.get("/", async (req, res) => {
+  try {
+    const users = await User.find(); // Busca todos los documentos
+
+    if (!users || users.length === 0) {
+      return res.status(404).json({ error: "No users found" });
+    }
+
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error getting users:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
