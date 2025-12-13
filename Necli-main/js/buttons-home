@@ -25,18 +25,18 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   btnRetirar.addEventListener("click", () => {
-    window.location.href = "/Necli-main/pages/retirar.html";
+    window.location.href = "/Necli-main/pages/withdraw-money.html";
   });
 
   btnTarjetaD.addEventListener("click", () => {
-    window.location.href = "/Necli-main/pages/tarjeta.html";
+    window.location.href = "/Necli-main/pages/card.html";
   });
 
   btnTransferir.addEventListener("click", () => {
-    window.location.href = "/Necli-main/pages/transferir.html";
+    window.location.href = "/Necli-main/pages/transfers.html";
   });
 
   btnCredito.addEventListener("click", () => {
-    window.location.href = "/Necli-main/pages/credito.html";
+    window.location.href = "/Necli-main/pages/request-credit.html";
   });
 });
