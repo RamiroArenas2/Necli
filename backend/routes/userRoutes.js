@@ -105,4 +105,84 @@ router.get("/", async (req, res) => {
 
 });
 
+// update user information
+
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { fullname, idtype, phone, email, age } = req.body;
+
+    if (!fullname || !idtype || !phone || !email || !age) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { fullname, idtype, phone, email, age },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// update password
+
+router.put("/:id/password", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res
+        .status(400)
+        .json({ error: "Current and new passwords are required" });
+    }
+
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    if (user.password !== currentPassword) {
+      return res.status(400).json({ error: "incorrect current password" });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error("Error changing password:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// Delete account
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deletedUser = await User.findByIdAndDelete(id);
+
+    if (!deletedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({ message: "Account deletees successfully" });
+  } catch (error) {
+    console.error("Error deleting account: ", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 module.exports = router;

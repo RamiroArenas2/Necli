@@ -15,7 +15,7 @@
                 
                 <div class="card-face card-front">
                     <div class="chip"></div>
-                    <div class="card-bank-logo">Banco NECLI</div>
+                    <div class="card-bank-logo">NECLI</div>
                     
                     <div class="card-number" id="cardNumDisplay">
                         <span>####</span> <span>####</span> <span>####</span> <span>####</span>
@@ -48,12 +48,12 @@
         </div>
         
         <div id="tempAlert" class="temp-alert">
-            ¡Datos Guardados! Procesando...
+            
         </div>
 
         <div id="successView">
             <button id="homeButton">
-                Ir a Home
+                Volver
             </button>
         </div>
 
@@ -63,9 +63,8 @@
             <label for="cardNumber">Número de Tarjeta</label>
             <input type="text" id="cardNumber" maxlength="19" required placeholder="Ej: 4000 1234 5678 9012">
             
-            <label for="cardName">Nombre del Titular</label>
-            <input type="text" id="cardName" required placeholder="Nombre como aparece en la tarjeta">
-
+            <label for="cardName">¿Cómo quieres que te llamen en la tarjeta?</label>
+            <input type="text" id="cardName" required placeholder="Tu Nombre Deseado">
             <div class="form-row">
                 <div class="form-group">
                     <label for="cardExpiry">Fecha de Vencimiento</label>
@@ -82,6 +81,6 @@
         </form>
     </div>
     
-    <script src="/Necli-main/js/card.js"></script>
+    <script src="/Necli-main/js/card.js"></script> 
 </body>
 </html>

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const cardFlip = document.getElementById('cardFlip');
     const paymentForm = document.getElementById('paymentForm');
     const successView = document.getElementById('successView');
-    const tempAlert = document.getElementById('tempAlert'); // ⭐ NUEVA REFERENCIA
+    const tempAlert = document.getElementById('tempAlert'); 
     const homeButton = document.getElementById('homeButton');
 
     // Referencias a los displays de la tarjeta
@@ -21,6 +21,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // 2. Funciones de Ayuda y Display
+    
+    function generateRandomNumber() {
+        // Genera un número de tarjeta de 16 dígitos aleatorios
+        let number = '';
+        for (let i = 0; i < 16; i++) {
+            number += Math.floor(Math.random() * 10);
+        }
+        return number;
+    }
+
+    function generateRandomDateAndCVV() {
+        const today = new Date();
+        const currentYear = today.getFullYear() % 100;
+        
+        // Generar un mes aleatorio (01 a 12)
+        const randomMonth = (Math.floor(Math.random() * 12) + 1).toString().padStart(2, '0');
+        
+        // Generar un año aleatorio (del actual + 1 al actual + 5)
+        const randomYearOffset = Math.floor(Math.random() * 5) + 1;
+        const randomYear = (currentYear + randomYearOffset).toString();
+        
+        const expiryDate = `${randomMonth}/${randomYear}`;
+        
+        // Generar CVV aleatorio de 3 dígitos
+        const cvv = Math.floor(Math.random() * 900) + 100; // Rango 100-999
+
+        return {
+            expiry: expiryDate,
+            cvv: cvv.toString()
+        };
+    }
 
     function formatCardNumber(value) {
         const cleanValue = value.replace(/\s/g, '').replace(/[^0-9]/g, '');
@@ -76,19 +107,28 @@ document.addEventListener('DOMContentLoaded', function () {
         sessionStorage.setItem('cardName', cardNameInput.value);
         sessionStorage.setItem('cardExpiry', cardExpiryInput.value);
         sessionStorage.setItem('cardCVV', cardCVVInput.value);
-        sessionStorage.setItem('cardDataSaved', 'true'); // Bandera para saber si ya se llenó
+        sessionStorage.setItem('cardDataSaved', 'true'); 
     }
 
     function loadCardData() {
-        const savedNumber = sessionStorage.getItem('cardNumber') || '';
-        const savedName = sessionStorage.getItem('cardName') || '';
-        const savedExpiry = sessionStorage.getItem('cardExpiry') || '';
-        const savedCVV = sessionStorage.getItem('cardCVV') || '';
+        let savedNumber = sessionStorage.getItem('cardNumber') || '';
+        const savedName = sessionStorage.getItem('cardName') || ''; // Se carga si existe, si no, queda vacío.
+        let savedExpiry = sessionStorage.getItem('cardExpiry') || '';
+        let savedCVV = sessionStorage.getItem('cardCVV') || '';
         const isDataSaved = sessionStorage.getItem('cardDataSaved') === 'true';
+
+        if (!isDataSaved) {
+            const randomData = generateRandomDateAndCVV();
+            
+            savedNumber = generateRandomNumber();
+            savedExpiry = randomData.expiry;
+            savedCVV = randomData.cvv;
+            // savedName se mantiene vacío (o lo que sea el || '') para que el usuario escriba.
+        }
 
         // Aplicar los datos a los inputs 
         cardNumberInput.value = savedNumber;
-        cardNameInput.value = savedName;
+        cardNameInput.value = savedName; 
         cardExpiryInput.value = savedExpiry;
         cardCVVInput.value = savedCVV;
 
@@ -100,11 +140,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // LÓGICA DE VISUALIZACIÓN INICIAL
         if (isDataSaved) {
-            // Si ya hay datos guardados y la bandera está activa, ocultar formulario y mostrar vista final
             paymentForm.style.display = 'none';
             successView.style.display = 'block';
         } else {
-            // Mostrar formulario si no hay datos guardados
             paymentForm.style.display = 'block';
             successView.style.display = 'none';
         }
