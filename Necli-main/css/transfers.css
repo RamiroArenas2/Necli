@@ -1,0 +1,59 @@
+@import url('/Necli-main/css/main.css');
+
+.header-transfer {
+    position: absolute;
+    top: 40px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-family: sans-serif;
+    color: #fff;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #fff;
+}
+
+
+.transfer-container {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    font-family: sans-serif;
+}
+
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    color: #2f2680;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.input-group input {
+    height: 55px;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    outline: none;
+    box-shadow: 0 4px 12px #2f2680;
+}
+
+.btn-primary {
+    height: 55px;
+    background: #916cdb;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 5px 15px #2f2680;
+}

@@ -1,95 +1,111 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('withdrawForm');
-    const amountInput = document.getElementById('amount');
-    const methodSelect = document.getElementById('method');
-    const feedbackMessage = document.getElementById('feedbackMessage');
-    const submitButton = form.querySelector('button[type="submit"]');
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("withdrawForm");
+  const amountInput = document.getElementById("amount");
+  const feedbackMessage = document.getElementById("feedbackMessage");
+  const submitButton = form.querySelector('button[type="submit"]');
 
-    // REFERENCIAS CLAVE del HTML
-    const withdrawContainer = document.getElementById('withdrawContainer');
-    const confirmationScreen = document.getElementById('confirmationScreen');
-    const confirmationMessage = document.getElementById('confirmationMessage');
-    const homeButton = document.getElementById('homeButton'); 
-    
-    // Datos de simulación y mapeo
-    const minimumAmount = 10000;
-    const stepAmount = 5000;
-    const availableBalance = 50000000; 
-    
-    const methodMap = {
-        'necli_atm': 'Corresponsal Necli (Red Aliada)',
-        'bancolombia': 'Corresponsal Bancolombia (A la Mano)',
-        'other_bank': 'Transferencia bancaria'
-    };
+  const withdrawContainer = document.getElementById("withdrawContainer");
+  const confirmationScreen = document.getElementById("confirmationScreen");
+  const confirmationMessage = document.getElementById("confirmationMessage");
+  const homeButton = document.getElementById("homeButton");
 
-    function showFeedback(message, isError = false) {
-        feedbackMessage.textContent = message;
-        feedbackMessage.style.color = isError ? '#ff4d4d' : '#00e676';
-        setTimeout(() => { 
-            if (feedbackMessage.textContent === message) {
-                feedbackMessage.textContent = '';
-            }
-        }, 5000); 
+  // ✅ FIX CLAVE
+  withdrawContainer.style.display = "flex";
+  confirmationScreen.style.display = "none";
+  feedbackMessage.textContent = "";
+
+  // ----- Custom select -----
+  const customSelect = document.getElementById("methodSelect");
+  const selected = customSelect.querySelector(".select-selected");
+  const items = customSelect.querySelector(".select-items");
+  let selectedMethod = "";
+
+  selected.addEventListener("click", () => {
+    items.classList.toggle("select-hide");
+  });
+
+  items.querySelectorAll("div").forEach((option) => {
+    option.addEventListener("click", () => {
+      selected.textContent = option.textContent;
+      selectedMethod = option.dataset.value;
+      items.classList.add("select-hide");
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!customSelect.contains(e.target)) {
+      items.classList.add("select-hide");
+    }
+  });
+
+  // ----- Datos base -----
+  const minimumAmount = 10000;
+  const stepAmount = 5000;
+  const availableBalance = 50000000;
+
+  const methodMap = {
+    necli_atm: "Corresponsal Necli (Red Aliada)",
+    bancolombia: "Corresponsal Bancolombia (A la Mano)",
+  };
+
+  function showFeedback(message, isError = false) {
+    feedbackMessage.textContent = message;
+    feedbackMessage.style.color = isError ? "#ff4d4d" : "#00e676";
+  }
+
+  function showConfirmation(amount, method) {
+    confirmationMessage.innerHTML = `
+      Retiro por <b>$${amount.toLocaleString()}</b><br><br>
+      Podrás retirarlo en:<br><b>${methodMap[method]}</b>
+    `;
+
+    withdrawContainer.style.display = "none";
+    confirmationScreen.style.display = "flex";
+  }
+
+  homeButton.addEventListener("click", () => {
+    window.location.href = "/Necli-main/pages/home.html";
+  });
+
+  // ----- Submit -----
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const amount = parseInt(amountInput.value);
+
+    if (isNaN(amount) || amount < minimumAmount) {
+      showFeedback(`Monto mínimo $${minimumAmount.toLocaleString()}`, true);
+      return;
     }
 
-    // FUNCIÓN: Muestra la pantalla de confirmación y oculta el formulario
-    function showConfirmation(amount, method) {
-        const designatedMethod = methodMap[method];
-        
-        confirmationMessage.innerHTML = `
-            Tu solicitud de retiro de $${amount.toLocaleString()} fue procesada. <br><br>
-            Se enviará un código e información detallada a tu número de teléfono y/o correo electrónico para que puedas retirar el dinero en: ${designatedMethod}.
-        `;
-        
-        withdrawContainer.style.display = 'none';
-        confirmationScreen.style.display = 'flex'; 
+    if (amount % stepAmount !== 0) {
+      showFeedback(
+        `Debe ser múltiplo de $${stepAmount.toLocaleString()}`,
+        true
+      );
+      return;
     }
 
-    // EVENTO CLAVE: REDIRECCIÓN A HOME 
-    homeButton.addEventListener('click', () => {
-        window.location.href = '/Necli-main/pages/home.html'; 
-    });
+    if (!selectedMethod) {
+      showFeedback("Seleccione un método de retiro", true);
+      return;
+    }
 
+    if (amount > availableBalance) {
+      showFeedback("Saldo insuficiente", true);
+      return;
+    }
 
-    // LÓGICA DE ENVÍO Y VALIDACIÓN DEL FORMULARIO
-    form.addEventListener('submit', function(event) {
-        event.preventDefault(); 
-        feedbackMessage.textContent = '';
+    submitButton.textContent = "Procesando...";
+    submitButton.disabled = true;
 
-        const amount = parseInt(amountInput.value);
-        const method = methodSelect.value;
-        
-        // --- VALIDACIONES ---
-        if (isNaN(amount) || amount < minimumAmount) {
-            showFeedback(`El monto mínimo de retiro es de $${minimumAmount.toLocaleString()}.`, true);
-            amountInput.focus();
-            return;
-        }
-        if (amount % stepAmount !== 0) {
-            showFeedback(`El monto debe ser múltiplo de $${stepAmount.toLocaleString()}.`, true);
-            amountInput.focus();
-            return;
-        }
-        if (method === "") {
-            showFeedback('Por favor, seleccione un método de retiro.', true);
-            methodSelect.focus();
-            return;
-        }
-        if (amount > availableBalance) {
-            showFeedback('Saldo insuficiente.', true);
-            return;
-        }
-
-        // 2. PROCESO DE RETIRO EXITOSO (Simulación)
-        submitButton.textContent = 'Procesando...';
-        submitButton.disabled = true;
-
-        setTimeout(() => {
-            showConfirmation(amount, method);
-            
-            form.reset();
-            submitButton.disabled = false;
-
-        }, 2500); 
-    });
+    setTimeout(() => {
+      showConfirmation(amount, selectedMethod);
+      form.reset();
+      selected.textContent = "Seleccione una opción";
+      selectedMethod = "";
+      submitButton.textContent = "Retirar";
+      submitButton.disabled = false;
+    }, 2000);
+  });
 });
