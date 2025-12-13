@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 2. Funciones de Ayuda y Display
     
-    // ⭐ FUNCIONES DE GENERACIÓN ALEATORIA ⭐
     function generateRandomNumber() {
         // Genera un número de tarjeta de 16 dígitos aleatorios
         let number = '';
@@ -53,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function () {
             cvv: cvv.toString()
         };
     }
-    // ⭐ FIN FUNCIONES ALEATORIAS ⭐
 
     function formatCardNumber(value) {
         const cleanValue = value.replace(/\s/g, '').replace(/[^0-9]/g, '');
@@ -119,7 +117,6 @@ document.addEventListener('DOMContentLoaded', function () {
         let savedCVV = sessionStorage.getItem('cardCVV') || '';
         const isDataSaved = sessionStorage.getItem('cardDataSaved') === 'true';
 
-        // ⭐ LÓGICA DE GENERACIÓN ALEATORIA (Si no hay datos guardados) ⭐
         if (!isDataSaved) {
             const randomData = generateRandomDateAndCVV();
             
@@ -128,7 +125,6 @@ document.addEventListener('DOMContentLoaded', function () {
             savedCVV = randomData.cvv;
             // savedName se mantiene vacío (o lo que sea el || '') para que el usuario escriba.
         }
-        // ⭐ FIN LÓGICA ALEATORIA ⭐
 
         // Aplicar los datos a los inputs 
         cardNumberInput.value = savedNumber;
