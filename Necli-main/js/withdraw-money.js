@@ -9,12 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const confirmationMessage = document.getElementById("confirmationMessage");
   const homeButton = document.getElementById("homeButton");
 
-  // ✅ FIX CLAVE
   withdrawContainer.style.display = "flex";
   confirmationScreen.style.display = "none";
   feedbackMessage.textContent = "";
 
-  // ----- Custom select -----
   const customSelect = document.getElementById("methodSelect");
   const selected = customSelect.querySelector(".select-selected");
   const items = customSelect.querySelector(".select-items");
@@ -38,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // ----- Datos base -----
+
   const minimumAmount = 10000;
   const stepAmount = 5000;
   const availableBalance = 50000000;

@@ -1,4 +1,4 @@
-/* ======= RESET ======= */
+
 * {
     margin: 0;
     padding: 0;
@@ -6,7 +6,6 @@
     font-family: "Poppins", sans-serif;
 }
 
-/* ======= BODY ======= */
 body {
     background: #2f227a;
     display: flex;
@@ -15,7 +14,7 @@ body {
     height: 100vh;
     padding: 20px;
 }
-/*======= titulo de Solicitud de credito =======*/
+
 h2 {
     text-align: center;
     color: #ecd1d1;
@@ -23,7 +22,6 @@ h2 {
 
 }
 
-/* ======= CONTENEDOR PRINCIPAL ======= */
 .credit-container {
     background: #f5f5f5;
     width: 100%;
@@ -34,7 +32,6 @@ h2 {
     animation: fadeIn 0.5s ease-in-out;
 }
 
-/* ======= TÍTULO ======= */
 .credit-container h1 {
     text-align: center;
     font-size: 26px;
@@ -49,7 +46,6 @@ h2 {
     margin-bottom: 25px;
 }
 
-/* ======= CAMPOS DEL FORMULARIO ======= */
 .form-group {
     margin-bottom: 18px;
 }
@@ -80,7 +76,6 @@ textarea:focus {
     background: #fff;
 }
 
-/* ======= BOTÓN ======= */
 button {
     width: 100%;
     padding: 14px;
@@ -98,7 +93,6 @@ button:hover {
     background: #3a7bcb;
 }
 
-/* ======= CUADRO DE RESULTADO ======= */
 #result {
     margin-top: 20px;
     padding: 15px;
@@ -109,13 +103,11 @@ button:hover {
     display: none;
 }
 
-/* ======= ANIMACIÓN ======= */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ======= MENSAJE DE ÉXITO (Solicitud Enviada) ======= */
 .success-message {
     position: absolute; 
     top: 50%;

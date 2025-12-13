@@ -1,4 +1,4 @@
-/* ======= Mobile-First Reset y Body ======= */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -12,11 +12,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    /* Alineamos arriba en lugar de centrar toda la pantalla */
     min-height: 100vh;
 }
 
-/* ======= CONTENEDOR PRINCIPAL DE PAGO (Mobile View) ======= */
 .card-checkout-container {
     width: 100%;
     max-width: 400px;
@@ -25,20 +23,17 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     padding-bottom: 20px;
 
-    /* CLAVE: Apilamiento vertical para móvil */
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* ======= ESTILOS 3D DE LA TARJETA ======= */
 .card-scene {
     width: 90%;
     max-width: 320px;
     height: 190px;
     perspective: 1000px;
     margin: 30px auto 40px auto;
-    /* Separación del formulario */
 }
 
 .flip-card {
@@ -49,7 +44,6 @@ body {
     transition: transform 0.8s;
 }
 
-/* Clase para rotar con JS */
 .flip-card.rotated {
     transform: rotateY(180deg);
 }
@@ -66,13 +60,8 @@ body {
     font-family: 'Courier New', Courier, monospace;
 }
 
-/* ================================================= */
-/* ============== ANVERSO (card-front) ============== */
-/* ================================================= */
-
 .card-front {
     background-color: #5d54a6;
-    /* Morado */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -129,10 +118,6 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* ================================================= */
-/* ============== REVERSO (card-back) ============== */
-/* ================================================= */
-
 .card-back {
     background-color: #4a4282;
     transform: rotateY(180deg);
@@ -182,8 +167,6 @@ body {
     color: rgba(255, 255, 255, 0.5);
 }
 
-
-/* ======= ESTILOS DEL FORMULARIO MOBILE ======= */
 .card-form {
     padding: 0 20px;
     width: 100%;
@@ -274,7 +257,6 @@ body {
     cursor: pointer;
 }
 
-/* ======= VISTA DE ÉXITO (Para aparecer debajo) ======= */
 #successView {
     width: 100%;
     max-width: 400px;

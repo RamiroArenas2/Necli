@@ -166,12 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("La nueva contraseña debe tener al menos 6 caracteres.");
       return;
     }
-    /*
-    if (newp === oldp) {
-      alert("La nueva contraseña debe ser diferente a la actual.");
-      return;
-    }
-    */
+    
     if (newp !== conf) {
       alert("La confirmación no coincide.");
       return;
