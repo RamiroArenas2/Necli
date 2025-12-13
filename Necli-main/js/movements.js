@@ -1,9 +1,7 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const btnHome=document.getElementById('btn-home');
+document.addEventListener("DOMContentLoaded", () => {
+  const btnInicio = document.querySelector("#Inicio");
 
-    btnHome.addEventListener('click',() => {
-        window.location.href="/Necli-main/pages/home.html"
-    });
-
-
+  btnInicio.addEventListener("click", () => {
+    window.location.href = "/Necli-main/pages/home.html";
+  });
 });

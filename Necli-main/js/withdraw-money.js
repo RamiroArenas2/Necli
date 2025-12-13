@@ -1,4 +1,40 @@
 document.addEventListener("DOMContentLoaded", () => {
+  let availableBalance = 0;
+  let accountNumber = "";
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (!user) {
+    window.location.href = "/Necli-main/pages/login.html";
+    return;
+  }
+
+  async function loadAccountData() {
+    try {
+      accountNumber = user.phone;
+
+      const res = await fetch(
+        `http://localhost:5000/api/accounts/${accountNumber}`
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        showFeedback("No se pudo cargar el saldo", true);
+        return;
+      }
+
+      availableBalance = data.Balance_Account;
+
+      console.log("Saldo cargado:", availableBalance);
+    } catch (error) {
+      console.error("Error cargando saldo:", error);
+      showFeedback("Error de conexión", true);
+    }
+  }
+
+  loadAccountData();
+
   const form = document.getElementById("withdrawForm");
   const amountInput = document.getElementById("amount");
   const feedbackMessage = document.getElementById("feedbackMessage");
@@ -41,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // ----- Datos base -----
   const minimumAmount = 10000;
   const stepAmount = 5000;
-  const availableBalance = 50000000;
 
   const methodMap = {
     necli_atm: "Corresponsal Necli (Red Aliada)",
@@ -68,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ----- Submit -----
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const amount = parseInt(amountInput.value);
@@ -99,13 +134,45 @@ document.addEventListener("DOMContentLoaded", () => {
     submitButton.textContent = "Procesando...";
     submitButton.disabled = true;
 
-    setTimeout(() => {
+    try {
+      const res = await fetch(
+        "http://localhost:5000/api/transactions/withdraw",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            Account_Number: accountNumber,
+            Amount: amount,
+          }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        showFeedback(data.error || "Error al retirar", true);
+        submitButton.textContent = "Retirar";
+        submitButton.disabled = false;
+        return;
+      }
+
+      // 🔥 Actualizar saldo local
+      availableBalance -= amount;
+
       showConfirmation(amount, selectedMethod);
+
       form.reset();
       selected.textContent = "Seleccione una opción";
       selectedMethod = "";
       submitButton.textContent = "Retirar";
       submitButton.disabled = false;
-    }, 2000);
+    } catch (error) {
+      console.error("Error en retiro:", error);
+      showFeedback("Error de conexión", true);
+      submitButton.textContent = "Retirar";
+      submitButton.disabled = false;
+    }
   });
 });
