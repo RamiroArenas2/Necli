@@ -79,10 +79,6 @@ body {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
-
-/* ---------------------------------------------------- */
-/* 4. FORMULARIO Y CAMPOS DE ENTRADA */
-/* ---------------------------------------------------- */
 .form-login {
     width: 100%;
     display: flex;
@@ -90,7 +86,6 @@ body {
     gap: 1rem; 
 }
 
-/* Campo de Teléfono (Contenedor +57) */
 .input-group-phone {
     display: flex;
     align-items: center;
@@ -120,7 +115,6 @@ body {
     outline: none;
 }
 
-/* Campo de PIN */
 .input-field {
     width: 100%; 
     padding: 0.8rem 0.9375rem; 
@@ -134,9 +128,7 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     outline: none;
 }
-/* ---------------------------------------------------- */
-/* 5. BOTONES (AMBOS VISIBLES Y ESTILOS FINALES) */
-/* ---------------------------------------------------- */
+
 .btn-submit,
 .btn-back {
     width: 100%; 
@@ -149,14 +141,12 @@ body {
     margin-top: 1rem; 
 }
 
-/* Botón LOGIN/INGRESA (Principal - Fondo Sólido Morado Claro) */
 .btn-submit {
     background-color: #a48dff; 
     border: 2px solid transparent; 
     color: #2f227a;            
 }
 
-/* Botón VOLVER (Secundario - Borde Claro, Fondo Transparente) */
 .btn-back {
     background-color: transparent;
     border: 2px solid #a48dff; 
@@ -173,9 +163,6 @@ body {
     background-color: rgba(164, 141, 255, 0.1); 
 }
 
-/* ---------------------------------------------------- */
-/* 6. MENSAJE DE ERROR (RESTAURADO) */
-/* ---------------------------------------------------- */
 #errorMessage {
     
     color: white;

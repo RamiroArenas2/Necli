@@ -1,5 +1,4 @@
-/* ----------------------------------- */
-/* 1. ESTILOS GENERALES */
+
 * {
   box-sizing: border-box;
 }
@@ -15,8 +14,6 @@ body {
   align-items: center;
 }
 
-/* ----------------------------------- */
-/* 2. CONTENEDOR PRINCIPAL */
 .container-withdraw {
   width: 90%;
   display: flex;
@@ -26,15 +23,11 @@ body {
   text-align: center;
 }
 
-/* ----------------------------------- */
-/* 3. TÍTULO */
 h2 {
   font-size: 1.8rem;
   margin-bottom: 2.5rem;
 }
 
-/* ----------------------------------- */
-/* 4. FORMULARIO */
 #withdrawForm {
   display: flex;
   flex-direction: column;
@@ -48,8 +41,6 @@ label {
   font-size: 1rem;
 }
 
-/* ----------------------------------- */
-/* 5. INPUT MONTO */
 input[type="number"] {
   width: 100%;
   padding: 14px;
@@ -66,8 +57,6 @@ input::placeholder {
   color: #8c7be8;
 }
 
-/* ----------------------------------- */
-/* 6. DROPDOWN CUSTOM */
 .custom-select {
   position: relative;
   width: 100%;
@@ -83,7 +72,6 @@ input::placeholder {
   text-align: left;
 }
 
-/* Lista */
 .select-items {
   position: absolute;
   top: 110%;
@@ -111,8 +99,6 @@ input::placeholder {
   display: none;
 }
 
-/* ----------------------------------- */
-/* 7. BOTÓN */
 button[type="submit"] {
   margin-top: 2.5rem;
   padding: 16px;
@@ -129,8 +115,6 @@ button[type="submit"]:active {
   transform: scale(0.98);
 }
 
-/* ----------------------------------- */
-/* 8. MENSAJES */
 #feedbackMessage {
   min-height: 20px;
   font-size: 0.95rem;
@@ -138,8 +122,6 @@ button[type="submit"]:active {
   text-align: center;
 }
 
-/* ----------------------------------- */
-/* 9. CONFIRMACIÓN */
 #confirmationScreen {
   display: none;
   position: fixed;
