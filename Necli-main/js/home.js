@@ -7,18 +7,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // 1️⃣ Mostrar nombre
+  //  Mostrar nombre
   document.getElementById("name-user").textContent = user.fullname;
 
-  // 2️⃣ Obtener número de cuenta (phone)
+  //  Obtener número de cuenta (phone)
   const accountNumber = user.phone;
 
-  // 3️⃣ Referencia al elemento de saldo
+  //  Referencia al elemento de saldo
   const balanceElement = document.getElementById("balance");
 
   try {
-    const res = await fetch(`http://localhost:5000/api/accounts/${accountNumber}`);
-    
+    const res = await fetch(
+      `http://localhost:5000/api/accounts/${accountNumber}`
+    );
+
     // Si la cuenta no existe
     if (!res.ok) {
       console.warn("Cuenta no encontrada, mostrando saldo 0");
@@ -31,15 +33,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const account = await res.json();
 
-    // 4️⃣ Validar que Balance_Account exista
-    const balance = typeof account.Balance_Account === "number" ? account.Balance_Account : 0;
+    //  Validar que Balance_Account exista
+    const balance =
+      typeof account.Balance_Account === "number" ? account.Balance_Account : 0;
 
-    // 5️⃣ Mostrar saldo formateado
+    //  Mostrar saldo formateado
     balanceElement.textContent = new Intl.NumberFormat("es-CO", {
       style: "currency",
       currency: "COP",
     }).format(balance);
-
   } catch (error) {
     console.error("Error obteniendo la cuenta:", error);
     balanceElement.textContent = new Intl.NumberFormat("es-CO", {

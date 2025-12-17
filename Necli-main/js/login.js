@@ -53,7 +53,7 @@ async function handleLogin(e) {
 
         showMessage("¡Bienvenido! Iniciando sesión...");
 
-        localStorage.setItem("userId", data._id);
+        localStorage.setItem("user", JSON.stringify(data));
 
         setTimeout(() => {
             window.location.href = HOME_URL;
