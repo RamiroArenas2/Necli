@@ -9,14 +9,7 @@ const Account = require("../models/account");
 router.post("/", async (req, res) => {
   console.log("BODY RECIBIDO:", req.body);
   try {
-    const {
-      fullname,
-      idtype,
-      phone,
-      email,
-      birthDate, 
-      pin,
-    } = req.body;
+    const { fullname, idtype, phone, email, birthDate, pin } = req.body;
 
     if (!fullname || !idtype || !phone || !email || !birthDate || !pin) {
       return res.status(400).json({ error: "All fields are required" });
@@ -124,16 +117,13 @@ router.get("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { fullname, idtype, phone, email, age } = req.body;
-
-    if (!fullname || !idtype || !phone || !email || !age) {
-      return res.status(400).json({ error: "All fields are required" });
-    }
+    const { fullname, idtype, phone, email } = req.body;
+    const age = Number(req.body.age);
 
     const updatedUser = await User.findByIdAndUpdate(
       id,
       { fullname, idtype, phone, email, age },
-      { new: true }
+      { new: true, runValidators: true }
     );
 
     if (!updatedUser) {

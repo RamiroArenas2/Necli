@@ -7,7 +7,7 @@ const AccountSchema = new mongoose.Schema({
         unique: true
     },
 
-    User: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true

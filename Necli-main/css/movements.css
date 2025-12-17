@@ -13,20 +13,24 @@ body {
   display: flex;
   flex-direction: column;
 }
+
 .header {
   padding: 20px 20px 10px;
   background-color: white;
 }
+
 .header h1 {
   font-size: 1.8rem;
   font-weight: 600;
-  color: #333;
+  color: #2f2680;
   margin: 0;
 }
+
 .transaction-list {
   flex-grow: 1;
   padding: 10px 20px;
 }
+
 .transaction-item {
   display: flex;
   align-items: center;
@@ -36,7 +40,16 @@ body {
   border-radius: 12px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border: 1px solid #eee;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease-in-out;
 }
+
+.transaction-item.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .icon-arrow {
   display: flex;
   align-items: center;
@@ -48,39 +61,43 @@ body {
   font-weight: bold;
   font-size: 1.2rem;
 }
+
 .income .icon-arrow {
   background-color: #e6f7e6;
   color: #28a745;
 }
+
 .expense .icon-arrow {
   background-color: #fcebeb;
   color: #dc3545;
 }
+
 .details {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
+
 .details .name {
   font-weight: 600;
   color: #333;
   font-size: 0.95rem;
 }
+
 .details .type {
   font-size: 0.8rem;
   color: #6c757d;
 }
+
 .amount {
   font-weight: bold;
   font-size: 1.1rem;
 }
+
 .income .amount {
   color: #28a745;
 }
+
 .expense .amount {
   color: #dc3545;
-}
-
-.header h1 {
-  color: #2f2680;
 }

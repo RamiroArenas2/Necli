@@ -1,27 +1,24 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const ids = {
-    btnBack: "btn-back",
-    btnUpdate: "btn-update-info",
-    btnChangePass: "btn-change-pass",
-    btnDelete: "btn-delete-account",
-    btnHelp: "btn-help",
-    btnLogout: "btn-logout",
-    panelUpdate: "panel-update",
-    panelPass: "panel-change-pass",
-    panelDelete: "panel-delete",
-    panelHelp: "panel-help",
-  };
+  const API_URL = "http://localhost:5000/api/users";
+  const user = JSON.parse(localStorage.getItem("user"));
 
+  if (!user) {
+    window.location.href = "/Necli-main/index.html";
+    return;
+  }
+
+  // ======================
+  // SELECTORES
+  // ======================
   const $ = (id) => document.getElementById(id);
 
   const panels = {
-    update: $(ids.panelUpdate),
-    pass: $(ids.panelPass),
-    delete: $(ids.panelDelete),
-    help: $(ids.panelHelp),
+    update: $("panel-update"),
+    pass: $("panel-change-pass"),
+    delete: $("panel-delete"),
+    help: $("panel-help"),
   };
 
-  // Forms / inputs
   const inputName = $("input-name");
   const inputDocument = $("input-doc");
   const inputPhone = $("input-phone");
@@ -31,188 +28,158 @@ document.addEventListener("DOMContentLoaded", () => {
   const inputOld = $("input-oldpass");
   const inputNew = $("input-newpass");
   const inputConfirm = $("input-confirm");
-  const formPass = $("form-pass");
 
-  // Botones internos de los paneles
-  const btnSaveUpdate = $("save-update");
-  const btnCancelUpdate = $("cancel-update");
-  const btnCancelUpdateBtn = $("cancel-update-btn");
+  const userNameTitle = $("user-name");
 
-  const btnSavePass = $("save-pass");
-  const btnCancelPass = $("cancel-pass");
-  const btnCancelPassBtn = $("cancel-pass-btn");
-
-  const btnConfirmDelete = $("confirm-delete");
-  const btnCancelDelete = $("cancel-delete");
-
-  const btnCloseHelp = $("close-help");
-
-  function openPanel(panelEl) {
+  // ======================
+  // PANEL CONTROL
+  // ======================
+  function openPanel(panel) {
     Object.values(panels).forEach((p) => p.setAttribute("aria-hidden", "true"));
-    panelEl.setAttribute("aria-hidden", "false");
-    document.documentElement.style.overflow = "hidden";
+    panel.setAttribute("aria-hidden", "false");
   }
 
-  function closePanel(panelEl) {
-    panelEl.setAttribute("aria-hidden", "true");
-    document.documentElement.style.overflow = "";
+  function closePanel(panel) {
+    panel.setAttribute("aria-hidden", "true");
   }
 
-  const STORAGE_KEY = "necli_settings_v1";
+  // ======================
+  // CARGAR DATOS DEL USUARIO
+  // ======================
+  function loadUserData() {
+    userNameTitle.textContent = user.fullname;
 
-  function saveState(partial = {}) {
-    const prev = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-    const next = Object.assign({}, prev, partial);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    inputName.value = user.fullname;
+    inputDocument.value = user.idtype;
+    inputPhone.value = user.phone;
+    inputEmail.value = user.email;
+    inputAge.value = Number(user.age) || "";
   }
 
-  function loadState() {
-    const state = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-    if (state.user) {
-      inputName.value = state.user.name || "";
-      inputEmail.value = state.user.email || "";
-      const titleEl = document.getElementById("user-name");
-      if (state.user.name) titleEl.textContent = state.user.name;
-    }
-  }
+  loadUserData();
 
-  // Guardar formularios actualizar información
-  function saveUpdateForm() {
-    const user = {
-      name: inputName.value.trim(),
-      document: inputDocument.value.trim(),
-      phone: inputPhone.value.trim(),
-      email: inputEmail.value.trim(),
-      age: inputAge.value.trim(),
-    };
-    saveState({ user });
-    if (user.name) document.getElementById("user-name").textContent = user.name;
-  }
+  // ======================
+  // ACTUALIZAR INFORMACIÓN
+  // ======================
+  $("btn-update-info").addEventListener("click", () =>
+    openPanel(panels.update)
+  );
 
-  // Simulación de guardar nueva contraseña
-  function savePasswordMock() {
-    saveState({ passwordChangedAt: new Date().toISOString() });
-  }
+  $("save-update").addEventListener("click", async () => {
+    try {
+      const updatedUser = {
+        fullname: inputName.value,
+        idtype: inputDocument.value,
+        phone: inputPhone.value,
+        email: inputEmail.value,
+        age: inputAge.value,
+      };
 
-  // acciones paneles
-  $(ids.btnUpdate).addEventListener("click", () => {
-    inputName.value = "";
-    inputDocument.value = "";
-    inputPhone.value = "";
-    inputEmail.value = "";
-    inputAge.value = "";
+      console.log("DATA A ENVIAR:", {
+        fullname: inputName.value,
+        idtype: inputDocument.value,
+        phone: inputPhone.value,
+        email: inputEmail.value,
+        age: inputAge.value,
+      });
 
-    openPanel(panels.update);
-  });
+      const res = await fetch(`${API_URL}/${user._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedUser),
+      });
 
-  $(ids.btnChangePass).addEventListener("click", () => openPanel(panels.pass));
-  $(ids.btnDelete).addEventListener("click", () => openPanel(panels.delete));
-  $(ids.btnHelp).addEventListener("click", () => openPanel(panels.help));
+      const data = await res.json();
 
-  $(ids.btnBack).addEventListener("click", (e) => {
-    e.preventDefault();
-    saveUpdateForm();
-    Object.values(panels).forEach((p) => p.setAttribute("aria-hidden", "true"));
-    window.location.href = "/Necli-main/pages/home.html";
-  });
+      if (!res.ok) {
+        alert(data.error);
+        return;
+      }
 
-  // botón Logout
-  $(ids.btnLogout).addEventListener("click", () => {
-    const ok = confirm("¿Estás seguro de que deseas cerrar sesión?");
-    if (ok) {
-      console.log("Sesión cerrada");
-      window.location.href = "/Necli-main/index.html";
-    } else {
-      console.log("Cierre de sesión cancelado");
+      localStorage.setItem("user", JSON.stringify(data));
+      userNameTitle.textContent = data.fullname;
+
+      alert("Información actualizada correctamente");
+      closePanel(panels.update);
+    } catch (err) {
+      alert("Error actualizando información");
     }
   });
 
-  // Panel Actualizar información
-  btnCancelUpdate.addEventListener("click", () => {
-    saveUpdateForm();
-    closePanel(panels.update);
-  });
+  $("cancel-update").addEventListener("click", () => closePanel(panels.update));
+  $("cancel-update-btn").addEventListener("click", () =>
+    closePanel(panels.update)
+  );
 
-  btnCancelUpdateBtn.addEventListener("click", () => {
-    saveUpdateForm();
-    alert("Los cambios no se guardaron.");
-    closePanel(panels.update);
-  });
+  // ======================
+  // CAMBIAR CONTRASEÑA
+  // ======================
+  $("btn-change-pass").addEventListener("click", () => openPanel(panels.pass));
 
-  btnSaveUpdate.addEventListener("click", () => {
-    saveUpdateForm();
-    alert("Información guardada correctamente.");
-    formPass.reset();
-    closePanel(panels.update);
-  });
-
-  // Panel cambiar contraseña
-  btnCancelPass.addEventListener("click", () => {
-    closePanel(panels.pass);
-  });
-
-  btnCancelPassBtn.addEventListener("click", () => {
-    saveUpdateForm();
-    alert("Los cambios no se guardaron.");
-    closePanel(panels.pass);
-  });
-
-  btnSavePass.addEventListener("click", () => {
-    const newp = inputNew.value || "";
-    const conf = inputConfirm.value || "";
-    /*const oldp = getCurrentPassword(); */
-
-    if (!newp || newp.length < 6) {
-      alert("La nueva contraseña debe tener al menos 6 caracteres.");
+  $("save-pass").addEventListener("click", async () => {
+    if (inputNew.value !== inputConfirm.value) {
+      alert("Las contraseñas no coinciden");
       return;
     }
-    
-    if (newp !== conf) {
-      alert("La confirmación no coincide.");
-      return;
+
+    try {
+      const res = await fetch(`${API_URL}/${user._id}/password`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          currentPassword: inputOld.value,
+          newPassword: inputNew.value,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error);
+        return;
+      }
+
+      alert("Contraseña actualizada");
+      closePanel(panels.pass);
+    } catch {
+      alert("Error cambiando contraseña");
     }
-    savePasswordMock();
-    alert("Contraseña actualizada.");
-    formPass.reset();
-    closePanel(panels.pass);
   });
 
-  // Panel eliminar cuenta
-  btnCancelDelete.addEventListener("click", () => closePanel(panels.delete));
-  btnConfirmDelete.addEventListener("click", () => {
-    const ok = confirm("¿Deseas eliminar la cuenta y todos los datos?");
-    if (ok) performDeleteAccount();
-  });
+  $("cancel-pass").addEventListener("click", () => closePanel(panels.pass));
+  $("cancel-pass-btn").addEventListener("click", () => closePanel(panels.pass));
 
-  btnCloseHelp.addEventListener("click", () => closePanel(panels.help));
+  // ======================
+  // ELIMINAR CUENTA
+  // ======================
+  $("btn-delete-account").addEventListener("click", () =>
+    openPanel(panels.delete)
+  );
 
-  function performDeleteAccount() {
-    localStorage.removeItem(STORAGE_KEY);
-    alert(
-      "Tu cuenta ha sido eliminada. Serás redireccionado a la pantalla de inicio."
-    );
+  $("confirm-delete").addEventListener("click", async () => {
+    const ok = confirm("¿Eliminar cuenta permanentemente?");
+    if (!ok) return;
+
+    await fetch(`${API_URL}/${user._id}`, { method: "DELETE" });
+
+    localStorage.clear();
     window.location.href = "/Necli-main/index.html";
-  }
+  });
 
-  loadState();
+  $("cancel-delete").addEventListener("click", () => closePanel(panels.delete));
 
-  const state = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-  if (state.openPanel) {
-    const mapping = {
-      update: panels.update,
-      pass: panels.pass,
-      delete: panels.delete,
-      help: panels.help,
-    };
-    if (mapping[state.openPanel]) openPanel(mapping[state.openPanel]);
-  }
+  // ======================
+  // LOGOUT
+  // ======================
+  $("btn-logout").addEventListener("click", () => {
+    localStorage.clear();
+    window.location.href = "/Necli-main/index.html";
+  });
 
-  window.addEventListener("beforeunload", () => {
-    saveUpdateForm();
-    const openKey = Object.entries(panels).find(
-      ([, el]) => el.getAttribute("aria-hidden") === "false"
-    );
-    if (openKey) saveState({ openPanel: openKey[0] });
-    else saveState({ openPanel: null });
+  // ======================
+  // BACK
+  // ======================
+  $("btn-back").addEventListener("click", () => {
+    window.location.href = "/Necli-main/pages/home.html";
   });
 });

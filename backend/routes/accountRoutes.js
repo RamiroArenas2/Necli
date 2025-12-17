@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
 
         const newAccount = new Account({
             Account_Number,
-            User: Id_User,
+            user: Id_User,
             Balance_Account: Balance_Account || 0,
             Debit_Card_Number: Debit_Card_Number || null
         });
@@ -39,7 +39,7 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
     try {
-        const accounts = await Account.find().populate("User");
+        const accounts = await Account.find().populate("user");
         res.status(200).json(accounts);
     } catch (error) {
         console.error("Error getting accounts:", error);
@@ -51,7 +51,7 @@ router.get("/:Account_Number", async (req, res) => {
     try {
         const { Account_Number } = req.params;
 
-        const account = await Account.findOne({ Account_Number }).populate("User");
+        const account = await Account.findOne({ Account_Number }).populate("user");
         if (!account) {
             return res.status(404).json({ error: "Account not found" });
         }
