@@ -17,7 +17,7 @@ function showMessage(message) {
   setTimeout(() => {
     errorDisplay.style.opacity = 0;
     errorDisplay.textContent = "";
-  }, 2000); // Ocultar después de 4 segundos
+  }, 2000);
 }
 
 async function handleLogin(e) {
@@ -26,23 +26,11 @@ async function handleLogin(e) {
   const phoneNumber = inputPhone.value.trim();
   const pin = inputPin.value.trim();
 
-  if (!inputPhone.checkValidity() || !inputPin.checkValidity()) {
-    showMessage(
-      "Por favor, complete todos los campos para ingresar. Los formatos deben ser correctos."
-    );
-    return;
-  }
-
   try {
     const res = await fetch(LOGIN_API, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        phone: phoneNumber,
-        password: pin,
-      }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ phone: phoneNumber, password: pin }),
     });
 
     const data = await res.json();
@@ -52,14 +40,30 @@ async function handleLogin(e) {
       return;
     }
 
-    showMessage("¡Bienvenido! Iniciando sesión...");
+    if (data.user && data.account) {
+      // --- AQUÍ ESTÁ LA SOLUCIÓN ---
+      // 1. Guardamos el objeto completo (como ya lo tenías)
+      localStorage.setItem("user", JSON.stringify(data.user));
 
-    localStorage.setItem("user", JSON.stringify(data));
-    localStorage.setItem("account", JSON.stringify(data.account));
+      // 2. ¡ESTA ES LA LÍNEA NUEVA! Guardamos el ID suelto para que bolsillos.js lo encuentre
+      localStorage.setItem("userId", data.user._id);
 
-    setTimeout(() => {
-      window.location.href = HOME_URL;
-    }, 500);
+      localStorage.setItem("account", JSON.stringify(data.account));
+
+      console.log("Datos guardados correctamente:", {
+        u: data.user.fullname,
+        id: data.user._id, // Verificamos en consola que el ID exista
+        a: data.account.Account_Number,
+      });
+
+      showMessage("¡Bienvenido!");
+      setTimeout(() => {
+        window.location.href = HOME_URL;
+      }, 500);
+    } else {
+      console.error("El backend no envió user o account:", data);
+      showMessage("Error interno: Datos de cuenta no recibidos.");
+    }
   } catch (error) {
     console.error("Error en login:", error);
     showMessage("Error de conexión con el servidor.");

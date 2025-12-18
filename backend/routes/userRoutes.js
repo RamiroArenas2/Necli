@@ -41,21 +41,15 @@ router.post("/", async (req, res) => {
 
     await newUser.save();
 
-    // Crear cuenta automáticamente (UNA SOLA)
-    const existingAccount = await Account.findOne({
+    // Crear cuenta automáticamente
+    const newAccount = new Account({
       Account_Number: phone,
+      user: newUser._id,
+      Balance_Account: 0,
+      Debit_Card_Number: null,
     });
 
-    if (!existingAccount) {
-      const newAccount = new Account({
-        Account_Number: phone,
-        User: newUser._id,
-        Balance_Account: 0,
-        Debit_Card_Number: null,
-      });
-
-      await newAccount.save();
-    }
+    await newAccount.save();
 
     res.status(201).json(newUser);
   } catch (error) {
@@ -65,45 +59,47 @@ router.post("/", async (req, res) => {
 });
 
 // ============================
-// LOGIN
+// LOGIN (CORREGIDO FINAL)
 // ============================
 router.post("/login", async (req, res) => {
   try {
     const { phone, password } = req.body;
-
-    if (!phone || !password) {
-      return res.status(400).json({ error: "Phone and password are required" });
-    }
-
     const user = await User.findOne({ phone });
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
 
-    if (user.password !== password) {
+    if (!user || user.password !== password) {
       return res.status(400).json({ error: "Incorrect password" });
     }
 
-    res.status(200).json(user);
+    // Buscamos con minúscula 'user'
+    let account = await Account.findOne({ user: user._id });
+
+    if (!account) {
+      console.log(`Reparando: Creando cuenta para ${user.phone}`);
+      account = new Account({
+        Account_Number: user.phone,
+        user: user._id, // CAMBIADO: 'user' en minúscula
+        Balance_Account: 0,
+        Debit_Card_Number: null,
+      });
+      await account.save();
+    }
+
+    res.status(200).json({ user, account });
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
-module.exports = router;
-
-/* ============================
-   GET ALL USERS
-============================ */
+// ============================
+// GET ALL USERS
+// ============================
 router.get("/", async (req, res) => {
   try {
     const users = await User.find();
-
     if (!users.length) {
       return res.status(404).json({ error: "No users found" });
     }
-
     res.status(200).json(users);
   } catch (error) {
     console.error("Error getting users:", error);
@@ -111,9 +107,9 @@ router.get("/", async (req, res) => {
   }
 });
 
-/* ============================
-   UPDATE USER INFO
-============================ */
+// ============================
+// UPDATE USER INFO
+// ============================
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -137,9 +133,9 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-/* ============================
-   UPDATE PASSWORD
-============================ */
+// ============================
+// UPDATE PASSWORD
+// ============================
 router.put("/:id/password", async (req, res) => {
   try {
     const { id } = req.params;
@@ -171,13 +167,12 @@ router.put("/:id/password", async (req, res) => {
   }
 });
 
-/* ============================
-   DELETE USER
-============================ */
+// ============================
+// DELETE USER
+// ============================
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-
     const deletedUser = await User.findByIdAndDelete(id);
 
     if (!deletedUser) {

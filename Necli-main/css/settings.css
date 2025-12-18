@@ -1,5 +1,5 @@
 :root {
-  --bg: #301e6a;
+  --bg: #2f2680;
   --panel: #4a3a9a;
   --accent: #8e7de0;
   --muted: rgba(255, 255, 255, 0.8);
@@ -109,7 +109,7 @@ body {
 
 .profile-footer {
   position: fixed;
-  bottom: 30px;
+  bottom: 60px;
   left: 30px;
   display: flex;
   flex-direction: column;

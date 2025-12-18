@@ -39,4 +39,14 @@ document.addEventListener("DOMContentLoaded", () => {
   btnCredito.addEventListener("click", () => {
     window.location.href = "/Necli-main/pages/request-credit.html";
   });
+
+  // Al darle clic al botón de Bolsillos en el grid
+  document.getElementById("Bolsillos").addEventListener("click", () => {
+    window.location.href = "/Necli-main/pages/bolsillos.html";
+  });
+
+  // Al darle clic al botón "Empezar" del banner
+  document.querySelector(".btn-promo").addEventListener("click", () => {
+    window.location.href = "/Necli-main/pages/bolsillos.html";
+  });
 });

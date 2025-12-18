@@ -1,18 +1,7 @@
 const express = require("express");
 const router = express.Router();
-
 const Transaction = require("../models/transactions");
 const Account = require("../models/account");
-
-// ======================
-// Helper para mapear tipo
-// ======================
-function mapTransactionType(type) {
-  if (type === "deposit") return "income";
-  if (type === "withdraw") return "expense";
-  if (type === "transfer") return "expense"; // para quien envía
-  return "expense";
-}
 
 // ======================
 // Deposit
@@ -20,25 +9,28 @@ function mapTransactionType(type) {
 router.post("/deposit", async (req, res) => {
   try {
     const { Account_Number, Amount } = req.body;
-
     const account = await Account.findOne({ Account_Number }).populate("user");
-    if (!account) return res.status(404).json({ error: "Account not found" });
 
-    account.Balance_Account += Amount;
+    if (!account || !account.user)
+      return res.status(404).json({ error: "Account/User not found" });
+
+    account.Balance_Account += Number(Amount);
     await account.save();
 
     await Transaction.create({
       user: account.user._id,
-      type: mapTransactionType("deposit"),
+      type: "income",
       amount: Amount,
       description: "Depósito",
-      relatedUser: "",
+      relatedUser: "Cajero / Sucursal",
       Balance_After: account.Balance_Account,
     });
 
-    res.status(200).json({ message: "Deposit successful" });
+    res.status(200).json({
+      message: "Deposit successful",
+      newBalance: account.Balance_Account,
+    });
   } catch (error) {
-    console.error("DEPOSIT ERROR:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
@@ -49,45 +41,44 @@ router.post("/deposit", async (req, res) => {
 router.post("/withdraw", async (req, res) => {
   try {
     const { Account_Number, Amount } = req.body;
-
     const account = await Account.findOne({ Account_Number }).populate("user");
+
     if (!account) return res.status(404).json({ error: "Account not found" });
 
-    if (!account.user) {
-      return res
-        .status(500)
-        .json({ error: "User not associated with account" });
-    }
-
     if (account.Balance_Account < Amount) {
-      return res.status(400).json({ error: "Insufficient funds" });
+      return res
+        .status(400)
+        .json({ error: "Fondos insuficientes (Revisa tus bolsillos)" });
     }
 
-    account.Balance_Account -= Amount;
+    account.Balance_Account -= Number(Amount);
     await account.save();
 
     await Transaction.create({
       user: account.user._id,
-      type: mapTransactionType("withdraw"),
+      type: "expense",
       amount: Amount,
       description: "Retiro",
-      relatedUser: "",
+      relatedUser: "Cajero Automático",
       Balance_After: account.Balance_Account,
     });
 
-    res.status(200).json({ message: "Withdraw successful" });
+    res.status(200).json({
+      message: "Withdraw successful",
+      newBalance: account.Balance_Account,
+    });
   } catch (error) {
-    console.error("WITHDRAW ERROR:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
 // ======================
-// Transfer
+// TRANSFER (CORREGIDO)
 // ======================
 router.post("/transfer", async (req, res) => {
   try {
     const { From, To, Amount } = req.body;
+    const monto = Number(Amount);
 
     const sender = await Account.findOne({ Account_Number: From }).populate(
       "user"
@@ -96,45 +87,38 @@ router.post("/transfer", async (req, res) => {
       "user"
     );
 
-    if (!sender || !receiver) {
-      return res.status(404).json({ error: "Account not found" });
+    if (!sender || !receiver)
+      return res.status(404).json({ error: "Cuenta no encontrada" });
+
+    // VALIDACIÓN CRÍTICA: Aquí usamos Balance_Account
+    if (sender.Balance_Account < monto) {
+      return res.status(400).json({ error: "Fondos insuficientes" });
     }
 
-    if (!sender.user || !receiver.user) {
-      return res
-        .status(500)
-        .json({ error: "User not associated with account" });
-    }
-
-    if (sender.Balance_Account < Amount) {
-      return res.status(400).json({ error: "Insufficient funds" });
-    }
-
-    // Actualizar balances
-    sender.Balance_Account -= Amount;
-    receiver.Balance_Account += Amount;
+    // Ejecutar transferencia
+    sender.Balance_Account -= monto;
+    receiver.Balance_Account += monto;
 
     await sender.save();
     await receiver.save();
 
-    // Crear transacción del remitente
+    // Guardar historial (Transactions)...
     await Transaction.create({
       user: sender.user._id,
-      type: mapTransactionType("transfer"),
-      amount: Amount,
+      type: "expense",
+      amount: monto,
       description: "Transferencia enviada",
-      relatedUser: receiver.user.name || "",
+      relatedUser: receiver.user.fullname,
       Target_Account: To,
       Balance_After: sender.Balance_Account,
     });
 
-    // Crear transacción del receptor
     await Transaction.create({
       user: receiver.user._id,
-      type: mapTransactionType("deposit"),
-      amount: Amount,
+      type: "income",
+      amount: monto,
       description: "Transferencia recibida",
-      relatedUser: sender.user.name || "",
+      relatedUser: sender.user.fullname,
       Target_Account: From,
       Balance_After: receiver.Balance_Account,
     });
@@ -147,23 +131,26 @@ router.post("/transfer", async (req, res) => {
 });
 
 // ======================
-// Get transaction history
+// Get History
 // ======================
 router.get("/:Account_Number/history", async (req, res) => {
   try {
     const account = await Account.findOne({
       Account_Number: req.params.Account_Number,
-    });
-    if (!account) return res.status(404).json({ error: "Account not found" });
+    }).populate("user");
+    if (!account || !account.user) return res.status(200).json([]);
 
-    const history = await Transaction.find({ user: account.user._id }).sort({
-      createdAt: -1,
-    });
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = parseInt(req.query.skip) || 0;
 
-    res.status(200).json(history);
+    const history = await Transaction.find({ user: account.user._id })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    return res.status(200).json(history);
   } catch (error) {
-    console.error("HISTORY ERROR:", error);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(200).json([]);
   }
 });
 

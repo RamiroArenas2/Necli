@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Necli-main/css/bolsillos.css">
+    <title>Mis Bolsillos</title>
+</head>
+
+<body>
+    <div class="page-container">
+        <header class="header">
+            <button class="btn-back" onclick="window.location.href='/Necli-main/pages/home.html'">←</button>
+            <h1>Mis Bolsillos</h1>
+        </header>
+
+        <main class="content-bolsillos">
+            <section class="summary-card">
+                <p>Total en bolsillos</p>
+                <h2 id="total-bolsillos">$ 0</h2>
+            </section>
+
+            <div class="bolsillos-list" id="bolsillos-container">
+                <div class="empty-state">
+                    <img src="/Necli-main/img/información.jpg" alt="No hay bolsillos">
+                    <p>Aún no tienes bolsillos creados.</p>
+                </div>
+            </div>
+        </main>
+
+        <button class="btn-add-bolsillo" id="open-modal">
+            <span>+</span> Crear Bolsillo
+        </button>
+    </div>
+
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-bottom">
+            <div class="modal-handle"></div>
+            <h2>Nuevo Bolsillo</h2>
+            <form id="form-crear-bolsillo">
+                <div class="input-group">
+                    <label>Nombre del bolsillo</label>
+                    <input type="text" id="nombre-bolsillo" placeholder="Ej: Viaje" required>
+                </div>
+                <div class="input-group">
+                    <label>Meta de ahorro</label>
+                    <input type="number" id="meta-ahorro" placeholder="$ 0" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="close-modal">Cancelar</button>
+                    <button type="submit" class="btn-confirm">Crear ahora</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-options">
+        <div class="modal-bottom">
+            <div class="modal-handle"></div>
+            <h2 id="options-title">Opciones</h2>
+            <div class="options-list">
+                <button class="option-btn" id="btn-open-add">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 8v8M8 12h8" />
+                    </svg>
+                    Meter plata
+                </button>
+                <button class="option-btn" id="btn-open-withdraw">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M8 12h8" />
+                    </svg>
+                    Sacar plata
+                </button>
+                <button class="option-btn delete" id="btn-delete-pocket">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                    </svg>
+                    Eliminar bolsillo
+                </button>
+            </div>
+            <button class="btn-cancel" id="close-options">Cerrar</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-transaction">
+        <div class="modal-bottom">
+            <div class="modal-handle"></div>
+            <h2 id="transaction-title">Meter Plata</h2>
+            <p id="transaction-desc">¿Cuánto dinero quieres mover?</p>
+
+            <form id="form-transaction">
+                <div class="input-group">
+                    <label>Monto</label>
+                    <input type="number" id="transaction-amount" placeholder="$ 0" required
+                        style="font-size: 24px; text-align: center; color: #2f2680; font-weight: bold;">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="close-transaction">Cancelar</button>
+                    <button type="submit" class="btn-confirm">Confirmar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/Necli-main/js/bolsillos.js"></script>
+</body>
+
+</html>

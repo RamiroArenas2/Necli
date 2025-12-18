@@ -1,145 +1,84 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  // ======================
-  // Botones de navegación (Inicio y More)
-  // ======================
-  const btnHome = document.querySelector("#Inicio");
-  const btnMore = document.querySelector("#More");
+    const container = document.querySelector(".transaction-list");
+    const account = JSON.parse(localStorage.getItem("account"));
 
-  btnHome.addEventListener("click", () => {
-    window.location.href = "/Necli-main/pages/home.html";
-  });
-
-  btnMore.addEventListener("click", () => {
-    window.location.href = "/Necli-main/pages/more.html";
-  });
-
-  // ======================
-  // Obtener usuario y cuenta desde localStorage
-  // ======================
-  const user = JSON.parse(localStorage.getItem("user"));
-  const account = JSON.parse(localStorage.getItem("account"));
-
-  if (!user || !account) {
-    console.warn("Usuario o cuenta no encontrados en localStorage");
-    window.location.href = "/Necli-main/index.html";
-    return;
-  }
-
-  if (!account.Account_Number) {
-    console.error("Account_Number no definido en localStorage");
-    return;
-  }
-
-  const container = document.querySelector(".transaction-list");
-  container.innerHTML = "";
-
-  // ======================
-  // Variables para scroll infinito
-  // ======================
-  let page = 0;
-  const limit = 10; // movimientos por carga
-  let loading = false;
-
-  // ======================
-  // Función para renderizar cada transacción
-  // ======================
-  function renderTransaction(tx) {
-    let uiType = "expense";
-    let arrow = "↓";
-    let label = "para";
-    let name = "Movimiento";
-
-    if (tx.type === "income") {
-      uiType = "income";
-      arrow = "↑";
-      label = "de";
-      name = "Ingreso";
-    } else if (tx.type === "expense") {
-      arrow = "↓";
-      label = "para";
-      name = tx.description || "Movimiento";
-      // Diferenciar retiro y transferencia
-      if (tx.description?.toLowerCase().includes("retiro")) name = "Retiro";
-      if (tx.description?.toLowerCase().includes("transferencia")) {
-        name = `Cuenta ${tx.Target_Account || ""}`;
-      }
-    }
-
-    const div = document.createElement("div");
-    div.className = `transaction-item ${uiType}`;
-    div.innerHTML = `
-      <div class="icon-arrow">
-        <span>${arrow}</span>
-      </div>
-      <div class="details">
-        <span class="name">${name}</span>
-        <span class="type">${label}</span>
-      </div>
-      <div class="amount">
-        $${tx.amount.toLocaleString("es-CO")}
-      </div>
-    `;
-
-    container.appendChild(div);
-
-    // Animación fade
-    setTimeout(() => div.classList.add("show"), 50);
-  }
-
-  // ======================
-  // Función para cargar transacciones desde backend
-  // ======================
-  async function loadTransactions() {
-    if (loading) return;
-    loading = true;
-
-    try {
-      const url = `http://localhost:5000/api/transactions/${
-        account.Account_Number
-      }/history?limit=${limit}&skip=${page * limit}`;
-      console.log("Fetching:", url);
-
-      const res = await fetch(url);
-      console.log("Status:", res.status);
-
-      let transactions = [];
-      try {
-        transactions = await res.json();
-      } catch (jsonErr) {
-        console.error("Respuesta no es JSON válido:", await res.text());
-        loading = false;
+    if (!account) {
+        window.location.href = "/Necli-main/index.html";
         return;
-      }
-
-      if (!Array.isArray(transactions) || transactions.length === 0) {
-        console.log("No hay más transacciones");
-        loading = false;
-        return;
-      }
-
-      transactions.forEach((tx) => renderTransaction(tx));
-      page++;
-      loading = false;
-    } catch (err) {
-      console.error("Error cargando transacciones:", err);
-      loading = false;
     }
-  }
 
-  // ======================
-  // Scroll infinito
-  // ======================
-  window.addEventListener("scroll", () => {
-    if (
-      window.innerHeight + window.scrollY >=
-      document.body.offsetHeight - 50
-    ) {
-      loadTransactions();
+    // Configuración de navegación (Asegúrese que los IDs existan en el HTML)
+    document.getElementById("Inicio").parentElement.onclick = () => window.location.href = "/Necli-main/pages/home.html";
+    document.getElementById("More").parentElement.onclick = () => window.location.href = "/Necli-main/pages/more.html";
+
+    let page = 0;
+    const limit = 10;
+    let loading = false;
+    let hasMore = true;
+
+    function renderTransaction(tx) {
+        // --- DEPURACIÓN: Mire esto en la consola del navegador (F12) ---
+        console.log("Transacción recibida:", tx.description, "Tipo:", tx.type);
+
+        // Forzamos la detección del tipo
+        // Si en tu DB el tipo llega como "income", "deposit" o algo que sume:
+        const isIncome = tx.type === "income"; 
+        
+        // Asignamos clases y símbolos basado en isIncome
+        const uiClass = isIncome ? "income" : "expense";
+        const arrowSymbol = isIncome ? "↑" : "↓";
+        const labelText = isIncome ? "de" : "para";
+        
+        let name = tx.description || "Movimiento";
+        if (tx.relatedUser) name = tx.relatedUser;
+
+        const div = document.createElement("div");
+        div.className = `transaction-item ${uiClass}`; // Aquí se pone .income o .expense
+        div.innerHTML = `
+            <div class="icon-arrow"><span>${arrowSymbol}</span></div>
+            <div class="details">
+                <span class="name">${name}</span>
+                <span class="type">${labelText}</span>
+            </div>
+            <div class="amount">${isIncome ? "+" : "-"} $${tx.amount.toLocaleString("es-CO")}</div>
+        `;
+        container.appendChild(div);
+        
+        // Animación de entrada
+        setTimeout(() => div.classList.add("show"), 50);
     }
-  });
 
-  // ======================
-  // Carga inicial
-  // ======================
-  loadTransactions();
+    async function loadTransactions() {
+        if (loading || !hasMore) return;
+        loading = true;
+
+        try {
+            const url = `http://localhost:5000/api/transactions/${account.Account_Number}/history?limit=${limit}&skip=${page * limit}`;
+            const res = await fetch(url);
+            const transactions = await res.json();
+
+            if (!transactions || transactions.length === 0) {
+                hasMore = false;
+                if (page === 0) container.innerHTML = "<p style='text-align:center; color:#888; margin-top:50px;'>No hay movimientos aún.</p>";
+                return;
+            }
+
+            transactions.forEach(renderTransaction);
+            page++; 
+        } catch (err) {
+            console.error("Error cargando historial:", err);
+        } finally {
+            // Evita disparar el scroll infinito demasiadas veces
+            setTimeout(() => { loading = false; }, 1000);
+        }
+    }
+
+    // Scroll infinito corregido
+    window.onscroll = () => {
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+            loadTransactions();
+        }
+    };
+
+    loadTransactions();
 });

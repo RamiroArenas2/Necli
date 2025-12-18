@@ -1,36 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Necli-main/css/movements.css">
-    <link rel="stylesheet" href="/Necli-main/css/main.css">
     <title>Historial</title>
 </head>
-<body>
-<div class="page-container">
-    <header class="header">
-        <h1>Historial</h1>
-    </header>
-    <main class="transaction-list">
-        <!-- Aquí se van a renderizar las transacciones dinámicamente -->
-    </main>
 
-    <section class="nav">
-        <section class="content-items">
-            <img id="Inicio-img" src="/Necli-main/img/inicio-black.svg" alt="logo inicio">
-            <h2 id="Inicio">Inicio</h2>
+<body>
+    <div class="page-container">
+        <header class="header">
+            <h1>Historial</h1>
+        </header>
+        <main class="transaction-list"></main>
+
+        <section class="nav">
+            <section class="content-items">
+                <img id="Inicio-img" src="/Necli-main/img/inicio-black.svg" alt="logo inicio">
+                <h2 id="Inicio">Inicio</h2>
+            </section>
+
+            <section class="content-items active-tab">
+                <img src="/Necli-main/img/transaction-history.png" alt="historial">
+                <h2 id="Historial">Historial</h2>
+            </section>
+
+            <section class="content-items">
+                <img src="/Necli-main/img/more.png" alt="more">
+                <h2 id="More">More</h2>
+            </section>
         </section>
-        <section class="content-items" id="selection-inicio">
-            <img src="/Necli-main/img/transaction-history.png" alt="">
-            <h2 id="Historial">Historial</h2>
-        </section>
-        <section class="content-items">
-            <img src="/Necli-main/img/more.png" alt="">
-            <h2 id="More">More</h2>
-        </section>
-    </section>
-</div>
-<script src="/Necli-main/js/movements.js"></script>
+    </div>
+    <script src="/Necli-main/js/movements.js"></script>
 </body>
+
 </html>

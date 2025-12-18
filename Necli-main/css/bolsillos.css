@@ -1,0 +1,342 @@
+/* =========================================
+   RESETEO Y BASES
+   ========================================= */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f4f4f9;
+  font-family: sans-serif;
+  margin: 0;
+}
+
+.page-container {
+  max-width: 450px;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 100px; /* Espacio para el botón flotante */
+}
+
+/* =========================================
+   ENCABEZADO
+   ========================================= */
+.header {
+  padding: 40px 20px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header h1 {
+  color: #2f2680;
+  font-size: 22px;
+  margin: 0;
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #2f2680;
+  cursor: pointer;
+}
+
+/* =========================================
+   TARJETA DE RESUMEN
+   ========================================= */
+.summary-card {
+  background: linear-gradient(135deg, #916cdb 0%, #2f2680 100%);
+  margin: 0 20px 20px;
+  padding: 25px;
+  border-radius: 20px;
+  color: white;
+  box-shadow: 0 8px 15px rgba(47, 38, 128, 0.2);
+}
+
+.summary-card p {
+  opacity: 0.8;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.summary-card h2 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* =========================================
+   ESTADO VACÍO (EL ARREGLO)
+   ========================================= */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.empty-state img {
+  width: 120px; /* Tamaño fijo controlado */
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  opacity: 0.8;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.empty-state p {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+/* =========================================
+   TARJETAS DE BOLSILLO
+   ========================================= */
+.bolsillos-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 0 20px;
+}
+
+.pocket-card {
+  background: white;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(145, 108, 219, 0.1);
+}
+
+.pocket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pocket-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pocket-icon {
+  font-size: 22px;
+  background: #f3e8ff;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+.pocket-name {
+  font-weight: bold;
+  color: #2f2680;
+  font-size: 16px;
+}
+
+.btn-more {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #2f2680;
+  line-height: 1;
+}
+
+.progress-container {
+  width: 100%;
+  height: 8px;
+  background: #f0f0f0;
+  border-radius: 10px;
+  margin: 15px 0;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #916cdb, #2f2680);
+  width: 0%; /* Se anima con JS */
+  transition: width 0.5s ease-in-out;
+}
+
+.pocket-values {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #666;
+}
+
+.current-val {
+  color: #2f2680;
+  font-weight: bold;
+}
+
+/* =========================================
+   MODALES (BOTTOM SHEET)
+   ========================================= */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-end;
+  z-index: 3000;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal-bottom {
+  width: 100%;
+  max-width: 450px;
+  background: white;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  padding: 25px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-out;
+  margin: 0 auto;
+}
+
+.modal-overlay.active .modal-bottom {
+  transform: translateY(0);
+}
+
+.modal-handle {
+  width: 40px;
+  height: 5px;
+  background: #ddd;
+  border-radius: 10px;
+  margin: 0 auto 20px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group label {
+  font-size: 13px;
+  font-weight: bold;
+  color: #2f2680;
+}
+
+.input-group input {
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  outline: none;
+}
+
+.input-group input:focus {
+  border-color: #916cdb;
+}
+
+/* LISTA DE OPCIONES DEL BOLSILLO */
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  border: none;
+  background: #f8f9fa;
+  border-radius: 15px;
+  font-weight: 600;
+  color: #2f2680;
+  cursor: pointer;
+  text-align: left;
+}
+
+.option-btn.delete {
+  color: #dc3545;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.btn-cancel,
+.btn-confirm {
+  flex: 1;
+  padding: 15px;
+  border-radius: 15px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background: #f0f0f0;
+  color: #666;
+}
+.btn-confirm {
+  background: #2f2680;
+  color: white;
+}
+
+/* =========================================
+   BOTÓN FLOTANTE PRINCIPAL
+   ========================================= */
+.btn-add-bolsillo {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2f2680;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 30px;
+  font-weight: bold;
+  box-shadow: 0 5px 20px rgba(47, 38, 128, 0.4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 100;
+}
+
+/* AJUSTE PARA LOS ICONOS SVG */
+.option-btn svg {
+  color: #916cdb; /* Color lila para los iconos */
+  width: 24px;
+  height: 24px;
+}
+
+.option-btn.delete svg {
+  color: #dc3545; /* Color rojo para la basura */
+}
+
+/* Para que el input de dinero se vea grande e importante */
+#transaction-amount {
+  font-size: 28px;
+  text-align: center;
+  color: #2f2680;
+  font-weight: bold;
+  letter-spacing: 1px;
+}

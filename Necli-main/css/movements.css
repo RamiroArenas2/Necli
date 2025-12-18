@@ -1,48 +1,51 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
+  font-family: sans-serif;
   background-color: #f4f4f9;
 }
 
 .page-container {
   max-width: 450px;
   margin: 0 auto;
-  background-color: white;
+  background-color: #f4f4f9;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  padding-bottom: 100px; /* Espacio para que la nav no tape los movimientos */
 }
 
 .header {
-  padding: 20px 20px 10px;
-  background-color: white;
+  padding: 30px 20px 15px;
+  background-color: #f4f4f9; /* Color de fondo igual al del body */
+  position: sticky;          /* Se queda "pegado" al llegar al borde */
+  top: 0;                    /* Distancia desde arriba */
+  z-index: 2000;             /* Por encima de los movimientos */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Opcional: una línea sutil al bajar */
 }
 
 .header h1 {
   font-size: 1.8rem;
-  font-weight: 600;
+  font-weight: bold;
   color: #2f2680;
   margin: 0;
 }
 
 .transaction-list {
-  flex-grow: 1;
   padding: 10px 20px;
 }
 
+/* Items del Historial */
 .transaction-item {
   display: flex;
   align-items: center;
-  padding: 12px 15px;
-  margin-bottom: 10px;
+  padding: 15px;
+  margin-bottom: 12px;
   background-color: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid #eee;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.3s ease-in-out;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
 }
 
 .transaction-item.show {
@@ -51,53 +54,97 @@ body {
 }
 
 .icon-arrow {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
   margin-right: 15px;
   font-weight: bold;
-  font-size: 1.2rem;
 }
 
+/* Colores según el tipo (Clases inyectadas por JS) */
 .income .icon-arrow {
   background-color: #e6f7e6;
   color: #28a745;
 }
-
 .expense .icon-arrow {
   background-color: #fcebeb;
   color: #dc3545;
 }
-
-.details {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+.income .amount {
+  color: #28a745;
+  font-weight: bold;
+}
+.expense .amount {
+  color: #2f2680;
+  font-weight: bold;
 }
 
+.details {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
 .details .name {
   font-weight: 600;
   color: #333;
   font-size: 0.95rem;
 }
-
 .details .type {
   font-size: 0.8rem;
   color: #6c757d;
 }
 
-.amount {
-  font-weight: bold;
-  font-size: 1.1rem;
+/* --- BARRA DE NAVEGACION ESTILO HOME --- */
+.nav {
+  height: 60px;
+  width: 75%; 
+  position: fixed; 
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px #2f2680;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
 }
 
-.income .amount {
-  color: #28a745;
+.content-items {
+  height: 90%;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  cursor: pointer;
 }
 
-.expense .amount {
-  color: #dc3545;
+/* ESTADO SELECCIONADO (Ahora en el centro para Historial) */
+.active-tab {
+  background-color: #916cdb77;
+}
+
+.nav img {
+  height: 25px;
+  width: 25px;
+}
+
+.content-items h2 {
+  color: #2f2680;
+  font-size: 12px;
+  font-weight: 500;
+  margin: 3px 0 0 0;
+  font-family: sans-serif;
+}
+
+/* Estilo específico para el texto de la pestaña activa */
+.active-tab h2 {
+  font-size: 14px;
+  font-weight: bolder;
 }

@@ -1,32 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ingreso de Tarjeta Bancaria</title>
-    <link rel="stylesheet" href="/Necli-main/css/card.css"> 
+    <title>Mi Tarjeta Necli</title>
+    <link rel="stylesheet" href="/Necli-main/css/card.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
+
 <body>
-    
+
     <div class="card-checkout-container">
-        
+
+        <div class="header-section">
+            <h2>Tu Tarjeta Digital</h2>
+            <p>Úsala para tus compras en línea</p>
+            <div class="status-badge">
+                <span class="dot"></span> Activa
+            </div>
+        </div>
+
         <div class="card-scene">
             <div class="flip-card" id="cardFlip">
-                
+
                 <div class="card-face card-front">
                     <div class="chip"></div>
                     <div class="card-bank-logo">NECLI</div>
-                    
+
                     <div class="card-number" id="cardNumDisplay">
-                        <span>####</span> <span>####</span> <span>####</span> <span>####</span>
+                        **** **** **** ****
                     </div>
 
                     <div class="card-details">
                         <div class="card-holder">
                             <label>Titular</label>
-                            <div class="card-name" id="cardNameDisplay">NOMBRE TITULAR</div>
+                            <div class="card-name" id="cardNameDisplay">CARGANDO...</div>
                         </div>
-                        
+
                         <div class="card-expiry">
                             <label>Vence</label>
                             <div class="card-date" id="cardExpiryDisplay">MM/AA</div>
@@ -41,46 +52,75 @@
                         <div class="card-cvv" id="cardCVVDisplay">***</div>
                     </div>
                     <div class="card-disclaimer">
-                        Esta tarjeta es propiedad del banco y debe ser devuelta si es requerida.
+                        Esta tarjeta es propiedad de Necli Bank. Prohibida su reproducción.
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div id="tempAlert" class="temp-alert">
-            
-        </div>
 
-        <div id="successView">
-            <button id="homeButton">
-                Volver
+        <div class="actions-grid">
+            <button class="action-btn" id="btnCopy">
+                <i class='bx bx-copy icon'></i>
+                <span>Copiar</span>
+            </button>
+            <button class="action-btn" id="btnFreeze">
+                <i class='bx bx-lock-open-alt icon'></i>
+                <span>Congelar</span>
+            </button>
+            <button class="action-btn" id="btnSettings">
+                <i class='bx bx-cog icon'></i>
+                <span>Ajustes</span>
             </button>
         </div>
 
-        <form id="paymentForm" class="card-form">
-            <h3>Detalles de la Tarjeta</h3>
-            
-            <label for="cardNumber">Número de Tarjeta</label>
-            <input type="text" id="cardNumber" maxlength="19" required placeholder="Ej: 4000 1234 5678 9012">
-            
-            <label for="cardName">¿Cómo quieres que te llamen en la tarjeta?</label>
-            <input type="text" id="cardName" required placeholder="Tu Nombre Deseado">
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="cardExpiry">Fecha de Vencimiento</label>
-                    <input type="text" id="cardExpiry" maxlength="5" required placeholder="MM/AA">
-                </div>
-                
-                <div class="form-group">
-                    <label for="cardCVV">CVV</label>
-                    <input type="text" id="cardCVV" maxlength="3" required placeholder="***">
-                </div>
-            </div>
-            
-            <button type="submit" id="payButton">Guardar Tarjeta</button>
-        </form>
+        <div id="successView" style="display: block;">
+            <button id="homeButton">
+                Volver al Inicio
+            </button>
+        </div>
+
     </div>
-    
-    <script src="/Necli-main/js/card.js"></script> 
+
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal-bottom">
+            <div class="modal-handle"></div>
+            <h3>Configuración</h3>
+
+            <div class="setting-item">
+                <div class="setting-text">
+                    <h4>Compras por Internet</h4>
+                    <small>Habilita pagos en sitios web</small>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-text">
+                    <h4>Uso en el exterior</h4>
+                    <small>Habilita pagos fuera del país</small>
+                </div>
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+
+            <button class="btn-option danger">
+                Reportar robo o pérdida
+            </button>
+
+            <button class="btn-option close-modal" id="btnCloseSettings">
+                Cerrar
+            </button>
+        </div>
+    </div>
+
+    <script src="/Necli-main/js/card.js"></script>
 </body>
+
 </html>

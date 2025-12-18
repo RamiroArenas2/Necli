@@ -1,197 +1,216 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const cardScene = document.querySelector('.card-scene');
-    const cardFlip = document.getElementById('cardFlip');
-    const paymentForm = document.getElementById('paymentForm');
-    const successView = document.getElementById('successView');
-    const tempAlert = document.getElementById('tempAlert'); 
-    const homeButton = document.getElementById('homeButton');
+document.addEventListener("DOMContentLoaded", async function () {
+  // --- 1. ELEMENTOS DEL DOM ---
+  const cardScene = document.querySelector(".card-scene");
+  const cardFlip = document.getElementById("cardFlip");
+  const homeButton = document.getElementById("homeButton");
 
-    const cardNumDisplay = document.getElementById('cardNumDisplay');
-    const cardNameDisplay = document.getElementById('cardNameDisplay');
-    const cardExpiryDisplay = document.getElementById('cardExpiryDisplay');
-    const cardCVVDisplay = document.getElementById('cardCVVDisplay');
+  // Elementos donde vamos a pintar la info de la DB
+  const cardNumDisplay = document.getElementById("cardNumDisplay");
+  const cardNameDisplay = document.getElementById("cardNameDisplay");
+  const cardExpiryDisplay = document.getElementById("cardExpiryDisplay");
+  const cardCVVDisplay = document.getElementById("cardCVVDisplay");
 
-    const cardNumberInput = document.getElementById('cardNumber');
-    const cardNameInput = document.getElementById('cardName');
-    const cardExpiryInput = document.getElementById('cardExpiry');
-    const cardCVVInput = document.getElementById('cardCVV');
+  // Ocultamos el formulario y alertas viejas si existen en el HTML, ya no se usan
+  const paymentForm = document.getElementById("paymentForm");
+  const tempAlert = document.getElementById("tempAlert");
+  const successView = document.getElementById("successView");
 
-    function generateRandomNumber() {
-        let number = '';
-        for (let i = 0; i < 16; i++) {
-            number += Math.floor(Math.random() * 10);
-        }
-        return number;
+  if (paymentForm) paymentForm.style.display = "none";
+  if (tempAlert) tempAlert.style.display = "none";
+  if (successView) successView.style.display = "block"; // Mostramos siempre el botón de volver
+
+  // --- 2. VALIDACIÓN DE SESIÓN ---
+  const user = JSON.parse(localStorage.getItem("user"));
+  const account = JSON.parse(localStorage.getItem("account"));
+
+  if (!user || !account) {
+    alert("Debes iniciar sesión para ver tu tarjeta");
+    window.location.href = "../index.html";
+    return;
+  }
+
+  // Pintamos el nombre del usuario de una vez (viene del Login)
+  if (cardNameDisplay) cardNameDisplay.innerText = user.fullname.toUpperCase();
+
+  // --- 3. FORMATO VISUAL ---
+  // Convierte "1234567812345678" en "1234 5678 1234 5678"
+  function formatCardNumberDisplay(number) {
+    if (!number) return "#### #### #### ####";
+    return number.match(/.{1,4}/g).join(" ");
+  }
+
+  // --- 4. CARGAR O CREAR TARJETA ---
+  async function initCardSystem() {
+    try {
+      // A. Buscamos si ya tiene tarjeta usando el ID de la CUENTA
+      const res = await fetch(
+        `http://localhost:5000/api/cards/byAccount/${account._id}`
+      );
+      const cards = await res.json();
+
+      if (res.ok && cards.length > 0) {
+        // SI TIENE TARJETA: La mostramos
+        console.log("Tarjeta encontrada:", cards[0]);
+        renderCard(cards[0]);
+      } else {
+        // NO TIENE TARJETA: La creamos automáticamente
+        console.log("No tienes tarjeta. Creando una nueva...");
+        createCard();
+      }
+    } catch (error) {
+      console.error("Error conectando con el servidor:", error);
+      if (cardNumDisplay) cardNumDisplay.innerText = "ERROR CONEXIÓN";
     }
+  }
 
-    function generateRandomDateAndCVV() {
-        const today = new Date();
-        const currentYear = today.getFullYear() % 100;
-        
-        const randomMonth = (Math.floor(Math.random() * 12) + 1).toString().padStart(2, '0');
-        
-        const randomYearOffset = Math.floor(Math.random() * 5) + 1;
-        const randomYear = (currentYear + randomYearOffset).toString();
-        
-        const expiryDate = `${randomMonth}/${randomYear}`;
-        
-        const cvv = Math.floor(Math.random() * 900) + 100; // Rango 100-999
+  // --- 5. CREAR TARJETA (POST) ---
+  async function createCard() {
+    try {
+      const res = await fetch("http://localhost:5000/api/cards", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          Id_Account: account._id, // Tu backend exige este campo
+        }),
+      });
 
-        return {
-            expiry: expiryDate,
-            cvv: cvv.toString()
-        };
+      const newCard = await res.json();
+
+      if (res.ok) {
+        renderCard(newCard);
+      } else {
+        alert("Error generando tarjeta: " + (newCard.error || "Desconocido"));
+      }
+    } catch (error) {
+      console.error("Error en creación:", error);
     }
+  }
 
-    function formatCardNumber(value) {
-        const cleanValue = value.replace(/\s/g, '').replace(/[^0-9]/g, '');
-        let formatted = cleanValue.replace(/(\d{4})/g, '$1 ').trim();
-        return formatted;
-    }
+  // --- 6. PINTAR DATOS EN PANTALLA ---
+  function renderCard(cardData) {
+    // Usamos TUS nombres de variables del Backend (Card_Number, Card_CCV, etc.)
+    if (cardNumDisplay)
+      cardNumDisplay.innerText = formatCardNumberDisplay(cardData.Card_Number);
+    if (cardExpiryDisplay)
+      cardExpiryDisplay.innerText = cardData.Card_Expiration_Date;
+    if (cardCVVDisplay) cardCVVDisplay.innerText = cardData.Card_CCV;
 
-    function updateCardNumberDisplay(value) {
-        const cleanValue = value.replace(/\s/g, '').substring(0, 16);
-        const formatted = formatCardNumber(cleanValue);
+    // El nombre siempre es el del usuario logueado
+    if (cardNameDisplay)
+      cardNameDisplay.innerText = user.fullname.toUpperCase();
+  }
 
-        let displayHTML = formatted.split(' ').map(block =>
-            `<span>${block.padEnd(4, '#')}</span>`
-        ).join(' ');
+  // ==========================================
+  // 8. FUNCIONALIDAD BOTÓN COPIAR (Con Boxicons)
+  // ==========================================
+  const btnCopy = document.getElementById("btnCopy");
 
-        if (cleanValue.length === 0) {
-            displayHTML = `<span>####</span> <span>####</span> <span>####</span> <span>####</span>`;
-        }
-        cardNumDisplay.innerHTML = displayHTML;
-    }
+  if (btnCopy) {
+    btnCopy.addEventListener("click", () => {
+      // Obtenemos el número sin espacios
+      const rawNumber = cardNumDisplay.innerText.replace(/\s/g, "");
 
-    function updateCardNameDisplay(value) {
-        cardNameDisplay.textContent = value.toUpperCase() || 'NOMBRE TITULAR';
-    }
+      // Copiar al portapapeles
+      navigator.clipboard.writeText(rawNumber).then(() => {
+        const originalHTML = btnCopy.innerHTML; // Guardamos el estado original
 
-    function updateCardExpiryDisplay(value) {
-        let cleanValue = value.replace(/\s/g, '').replace(/[^0-9]/g, '');
-        if (cleanValue.length > 2) {
-            cleanValue = cleanValue.substring(0, 2) + '/' + cleanValue.substring(2, 4);
-        }
+        // Cambiamos a un CHECK verde
+        btnCopy.innerHTML = `<i class='bx bx-check-circle icon' style="color: #28a745;"></i><span style="color: #28a745;">¡Listo!</span>`;
+        btnCopy.style.background = "#e3f9e5"; // Fondo verde claro
 
-        let displayValue;
-        if (cleanValue.length === 0) {
-            displayValue = 'MM/AA';
-        } else if (cleanValue.length > 2 && cleanValue.indexOf('/') > -1) {
-            displayValue = cleanValue.substring(0, 3) + cleanValue.substring(3, 5).padEnd(2, 'A');
-        } else {
-            displayValue = cleanValue.padEnd(2, 'M') + '/AA';
-        }
-        cardExpiryDisplay.textContent = displayValue;
-    }
-
-    function updateCardCVVDisplay(value) {
-        const cleanValue = value.replace(/[^0-9]/g, '').substring(0, 4);
-        const stars = cleanValue.replace(/./g, '*');
-        cardCVVDisplay.textContent = stars.padEnd(3, '*');
-    }
-
-    function saveCardData() {
-        sessionStorage.setItem('cardNumber', cardNumberInput.value);
-        sessionStorage.setItem('cardName', cardNameInput.value);
-        sessionStorage.setItem('cardExpiry', cardExpiryInput.value);
-        sessionStorage.setItem('cardCVV', cardCVVInput.value);
-        sessionStorage.setItem('cardDataSaved', 'true'); 
-    }
-
-    function loadCardData() {
-        let savedNumber = sessionStorage.getItem('cardNumber') || '';
-        const savedName = sessionStorage.getItem('cardName') || '';
-        let savedExpiry = sessionStorage.getItem('cardExpiry') || '';
-        let savedCVV = sessionStorage.getItem('cardCVV') || '';
-        const isDataSaved = sessionStorage.getItem('cardDataSaved') === 'true';
-
-        if (!isDataSaved) {
-            const randomData = generateRandomDateAndCVV();
-            
-            savedNumber = generateRandomNumber();
-            savedExpiry = randomData.expiry;
-            savedCVV = randomData.cvv;
-        }
-
-        cardNumberInput.value = savedNumber;
-        cardNameInput.value = savedName; 
-        cardExpiryInput.value = savedExpiry;
-        cardCVVInput.value = savedCVV;
-
-        // Refrescar la tarjeta visual
-        updateCardNumberDisplay(savedNumber);
-        updateCardNameDisplay(savedName);
-        updateCardExpiryDisplay(savedExpiry);
-        updateCardCVVDisplay(savedCVV);
-
-        if (isDataSaved) {
-            paymentForm.style.display = 'none';
-            successView.style.display = 'block';
-        } else {
-            paymentForm.style.display = 'block';
-            successView.style.display = 'none';
-        }
-    }
-
-    loadCardData();
-
-    cardScene.addEventListener('click', function () {
-        cardFlip.classList.toggle('rotated');
-    });
-
-    cardNumberInput.addEventListener('input', function () {
-        this.value = formatCardNumber(this.value);
-        updateCardNumberDisplay(this.value);
-        saveCardData();
-    });
-
-    cardNameInput.addEventListener('input', function () {
-        updateCardNameDisplay(this.value);
-        saveCardData();
-    });
-
-    cardExpiryInput.addEventListener('input', function () {
-        let value = this.value.replace(/\s/g, '').replace(/[^0-9]/g, '');
-        if (value.length > 2) {
-            value = value.substring(0, 2) + '/' + value.substring(2, 4);
-        }
-        this.value = value.substring(0, 5);
-        updateCardExpiryDisplay(this.value);
-        saveCardData();
-    });
-
-    cardCVVInput.addEventListener('input', function () {
-        const cleanValue = this.value.replace(/[^0-9]/g, '').substring(0, 4);
-        this.value = cleanValue;
-        updateCardCVVDisplay(this.value);
-        saveCardData();
-
-        if (document.activeElement === this) {
-            cardFlip.classList.add('rotated');
-        }
-    });
-
-    cardCVVInput.addEventListener('blur', function () {
-        cardFlip.classList.remove('rotated');
-    });
-
-    homeButton.addEventListener('click', function () {
-        window.location.href = '/Necli-main/pages/home.html';
-    });
-
-    paymentForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        saveCardData();
-
-        paymentForm.style.display = 'none';
-        tempAlert.style.display = 'block';
-
+        // Volver a la normalidad en 2 segundos
         setTimeout(() => {
-            tempAlert.style.display = 'none';
-
-            successView.style.display = 'block';
-
+          btnCopy.innerHTML = originalHTML; // Restauramos el icono de copiar
+          btnCopy.style.background = "white";
         }, 2000);
+      });
     });
+  }
+
+  // ==========================================
+  // 9. FUNCIONALIDAD BOTÓN CONGELAR (Candado)
+  // ==========================================
+  const btnFreeze = document.getElementById("btnFreeze");
+  let isFrozen = false;
+
+  if (btnFreeze) {
+    btnFreeze.addEventListener("click", () => {
+      isFrozen = !isFrozen;
+      const badge = document.querySelector(".status-badge");
+      const card = document.querySelector(".flip-card");
+
+      if (isFrozen) {
+        // --- ESTADO: CONGELADO (Candado Cerrado Rojo) ---
+        // Usamos 'bx-lock-alt' (Candado cerrado sólido)
+        btnFreeze.innerHTML = `<i class='bx bxs-lock-alt icon' style="color: #dc3545;"></i><span style="color: #dc3545;">Desbloq.</span>`;
+        btnFreeze.style.background = "#ffebee";
+
+        badge.style.background = "#ffebee";
+        badge.style.color = "#dc3545";
+        badge.innerHTML = `<span class="dot" style="background:#dc3545; box-shadow:none;"></span> Congelada`;
+
+        if (card) card.style.filter = "grayscale(100%) opacity(0.8)";
+      } else {
+        // --- ESTADO: ACTIVO (Candado Abierto Morado) ---
+        // Usamos 'bx-lock-open-alt' (Candado abierto)
+        btnFreeze.innerHTML = `<i class='bx bx-lock-open-alt icon'></i><span>Congelar</span>`;
+        btnFreeze.style.background = "white";
+
+        badge.style.background = "#e3f9e5";
+        badge.style.color = "#28a745";
+        badge.innerHTML = `<span class="dot"></span> Activa`;
+
+        if (card) card.style.filter = "none";
+      }
+    });
+  }
+
+  // ==========================================
+  // 10. LÓGICA DEL MODAL DE AJUSTES
+  // ==========================================
+  const btnSettings = document.getElementById("btnSettings");
+  const settingsModal = document.getElementById("settingsModal");
+  const btnCloseSettings = document.getElementById("btnCloseSettings");
+
+  // Abrir Modal
+  if (btnSettings) {
+    btnSettings.addEventListener("click", () => {
+      settingsModal.classList.add("active");
+    });
+  }
+
+  // Cerrar Modal (Botón "Cerrar")
+  if (btnCloseSettings) {
+    btnCloseSettings.addEventListener("click", () => {
+      settingsModal.classList.remove("active");
+    });
+  }
+
+  // Cerrar Modal (Click afuera en lo oscuro)
+  if (settingsModal) {
+    settingsModal.addEventListener("click", (e) => {
+      if (e.target === settingsModal) {
+        settingsModal.classList.remove("active");
+      }
+    });
+  }
+
+  // --- 7. EVENTOS ---
+
+  // Girar tarjeta al hacer clic
+  if (cardScene) {
+    cardScene.addEventListener("click", function () {
+      cardFlip.classList.toggle("rotated");
+    });
+  }
+
+  // Volver al Home
+  if (homeButton) {
+    homeButton.addEventListener("click", function () {
+      window.location.href = "/Necli-main/pages/home.html";
+    });
+  }
+
+  // INICIAR TODO EL PROCESO
+  initCardSystem();
 });

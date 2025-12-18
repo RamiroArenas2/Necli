@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Necli-main/css/main.css">
-    <title>Document</title>
+    <title>Necli - Inicio</title>
 </head>
 
 <body>
@@ -18,9 +18,8 @@
         <section class="content-info-profile-welcome">
             <section class="content-img-profile">
                 <button class="button-settings" id="button-settings">
-                    <img src="/Necli-main/img/img-profile.png" alt="">
+                    <img src="/Necli-main/img/img-profile.png" alt="Perfil">
                 </button>
-
             </section>
             <section class="content-welcome">
                 <p>Bienvenid@</p>
@@ -40,59 +39,84 @@
                 <img id="eye-closed" src="/Necli-main/img/closed-eye.png" class="eye-icon">
             </button>
         </section>
-
         <section class="content-balance">
             <span id="balance"></span>
             <span id="balance-hidden" class="hidden">•••••••</span>
         </section>
-
     </section>
 
     <section class="content-options">
-        <section class="content-options-ubications">
-            <section class="target-options ">
-                <img src="" alt="">
-                <button id="TarjetaD">Tarjeta Necli</button>
-            </section>
-            <section class="target-options ">
-                <img src="" alt="">
-                <button id="Retirar">Retirar Dinero</button>
-            </section>
-            <section class="target-options ">
-                <img src="" alt="">
-                <button id="Transferir">Transferir Dinero</button>
-            </section>
-            <section class="target-options ">
-                <img src="" alt="">
-                <button id="Credito">Solicitar Credito</button>
-            </section>
-            <section class="target-options ">
-                <img src="" alt="">
-                <button id="Qr">Codigo QR</button>
-            </section>
-        </section>
+        <div class="options-grid">
+            <button class="option-card" id="TarjetaD">
+                <div class="icon-circle primary-soft">
+                    <img src="/Necli-main/img/card-debit.png" alt="Tarjeta">
+                </div>
+                <span>Tarjeta</span>
+            </button>
+            <button class="option-card" id="Retirar">
+                <div class="icon-circle primary-soft">
+                    <img src="/Necli-main/img/with-draw.png" alt="Retirar">
+                </div>
+                <span>Retirar</span>
+            </button>
+            <button class="option-card" id="Transferir">
+                <div class="icon-circle primary-soft">
+                    <img src="/Necli-main/img/transaction-history.png" alt="Enviar">
+                </div>
+                <span>Enviar</span>
+            </button>
+            <button class="option-card" id="Bolsillos">
+                <div class="icon-circle primary-soft">
+                    <img src="/Necli-main/img/información.jpg" alt="Bolsillos">
+                </div>
+                <span>Bolsillos</span>
+            </button>
+            <button class="option-card" id="Qr">
+                <div class="icon-circle primary-soft">
+                    <img src="/Necli-main/img/QR.png" alt="QR">
+                </div>
+                <span>QR</span>
+            </button>
+            <button class="option-card" id="Credito">
+                <div class="icon-circle primary-soft">
+                    <img src="/Necli-main/img/icons8-user-100.png" alt="Préstamo">
+                </div>
+                <span>Préstamo</span>
+            </button>
+        </div>
+    </section>
+
+    <section class="home-promo-section">
+        <div class="promo-card">
+            <div class="promo-info">
+                <h3>¡Organiza tu plata!</h3>
+                <p>Crea tu primer bolsillo y cumple tus metas más rápido.</p>
+                <button class="btn-promo">Empezar</button>
+            </div>
+            <div class="promo-img">
+                <img src="/Necli-main/img/ImgNecli.png.jpg" alt="Promo">
+            </div>
+        </div>
     </section>
 
     <section class="nav">
-        <section class="content-items" id="selection-inicio">
+        <section class="content-items active-tab" id="btn-home-nav">
             <img id="Inicio-img" src="/Necli-main/img/inicio-black.svg" alt="logo inicio">
-            <h2 id="Inicio">Inicio</H2>
+            <h2 id="Inicio">Inicio</h2>
         </section>
-        <section class="content-items">
-            <img src="/Necli-main/img/transaction-history.png" alt="">
-            <h2 id="Historial">Historial</H2>
+        <section class="content-items" id="btn-history-nav">
+            <img src="/Necli-main/img/transaction-history.png" alt="historial">
+            <h2 id="Historial">Historial</h2>
         </section>
-        <section class="content-items">
-            <img src="/Necli-main/img/more.png" alt="">
-            <h2 id="More">More</H2>
+        <section class="content-items" id="btn-more-nav">
+            <img src="/Necli-main/img/more.png" alt="more">
+            <h2 id="More">More</h2>
         </section>
     </section>
-
 
     <script src="/Necli-main/js/hidden-balance.js"></script>
     <script src="/Necli-main/js/buttons-home.js"></script>
     <script src="/Necli-main/js/home.js"></script>
-
 </body>
 
 </html>
